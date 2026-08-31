@@ -63,6 +63,15 @@ permission; CSP sets `connect-src 'none'`.
 
 WebMCP, JavaScript ES modules, HTML, CSS, JSON, Node.js test runner, Vercel.
 
+## Prepared images
+
+- Desktop product capture: `docs/assets/navigator-desktop.png`
+- Mobile product capture: `docs/assets/navigator-mobile.png`
+
+Both captures show the useful resident experience and independent-service
+notice. Neither contains an account, credential, private repository, or real
+resident case.
+
 ## Boundaries
 
 Independent demonstration by 802 Flamingo LLC. Not a municipal or state
