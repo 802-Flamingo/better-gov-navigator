@@ -55,7 +55,7 @@ permission; CSP sets `connect-src 'none'`.
 - Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `17bacfcfd147e719a87aeed6954ed634737dd145`
+- Production commit: `c443a0a87084a0278602bef02dbd69202de69801`
 
 ## Technologies
 
