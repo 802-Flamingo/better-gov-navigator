@@ -14,10 +14,11 @@ endorsement is implied.
 
 - Branded URL: <https://navigator.govermont.co>
 - Direct Vercel fallback: <https://better-gov-navigator.vercel.app>
-- Immutable release: <https://better-gov-navigator-knim4tkte-802-flamingo.vercel.app>
 
 The branded address is a direct Vercel project domain. It does not execute this
-application through the private GoVermont deployment.
+application through the private GoVermont deployment. The deployment-specific
+rollback artifact is recorded in [docs/RELEASE_RECORD.md](docs/RELEASE_RECORD.md)
+and requires Vercel project access; it is not presented as a public fallback.
 
 ## What it does
 

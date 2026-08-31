@@ -37,7 +37,8 @@
 ## Deployment
 
 - [x] Create direct Vercel production deployment and record URL.
-- [x] Preserve a known-good immutable deployment URL and verify it independently.
+- [x] Preserve a known-good deployment-specific rollback artifact and inspect its
+  ready state independently. Vercel project SSO protects that operator URL.
 - [x] Attach `navigator.govermont.co` without proxying through GoVermont code.
 - [x] Confirm both branded and direct URLs; keep direct URL in submission notes.
 - [x] Confirm expected incremental cost remains $0.

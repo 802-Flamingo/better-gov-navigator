@@ -53,11 +53,9 @@ permission; CSP sets `connect-src 'none'`.
 
 - Live branded URL: `https://navigator.govermont.co`
 - Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
-- Immutable release URL:
-  `https://better-gov-navigator-knim4tkte-802-flamingo.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `5da7e6c886c24539f30e6a9250db93f25e93f06c`
+- Production commit: `17bacfcfd147e719a87aeed6954ed634737dd145`
 
 ## Technologies
 
@@ -65,8 +63,8 @@ WebMCP, JavaScript ES modules, HTML, CSS, JSON, Node.js test runner, Vercel.
 
 ## Prepared images
 
-- Desktop product capture: `docs/assets/navigator-desktop.png`
-- Mobile product capture: `docs/assets/navigator-mobile.png`
+- Desktop product capture: `docs/assets/navigator-desktop.jpg`
+- Mobile product capture: `docs/assets/navigator-mobile.jpg`
 
 Both captures show the useful resident experience and independent-service
 notice. Neither contains an account, credential, private repository, or real

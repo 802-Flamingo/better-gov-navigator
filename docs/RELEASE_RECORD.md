@@ -3,17 +3,21 @@
 ## Production artifact
 
 - Recorded: August 31, 2026
-- Git commit: `5da7e6c886c24539f30e6a9250db93f25e93f06c`
-- Vercel deployment ID: `dpl_7qDFQqBufy6NFw6QLoFXRSmJibky`
+- Git commit: `17bacfcfd147e719a87aeed6954ed634737dd145`
+- Vercel deployment ID: `dpl_67LzgTR8wn4NdG16SNCZJWXaimz9`
 - Branded URL: `https://navigator.govermont.co`
 - Direct fallback: `https://better-gov-navigator.vercel.app`
-- Immutable deployment:
-  `https://better-gov-navigator-knim4tkte-802-flamingo.vercel.app`
+- Deployment-specific rollback artifact:
+  `https://better-gov-navigator-9rc8z73qz-802-flamingo.vercel.app`
 - Expected incremental cost: `$0`
 
 The branded domain is attached directly to the isolated Vercel project. No
 private GoVermont code, API, runtime, or reverse proxy participates in the
 deployment.
+
+The direct fallback is public and returned HTTP 200 during release verification.
+Vercel protects the deployment-specific URL with project SSO; it is retained as
+an operator rollback artifact and is not represented as a public fallback.
 
 ## Verified gates
 
@@ -27,7 +31,10 @@ deployment.
   the production deployment.
 - Real ChatGPT in-app-browser calls passed discovery, consent, stale-revision,
   proposal, handoff, and revocation checks on both direct and branded URLs.
-- Mobile checks at 320px and 390px passed without horizontal overflow.
+- The new branded release passed discovery, consent, exact-path, deterministic
+  handoff, proposal, stale-revision, revocation, and zero-console-error checks.
+- Mobile checks at 320px and 390px passed without horizontal overflow or a
+  mid-word rate-table header break.
 
 ## Open release gates
 
