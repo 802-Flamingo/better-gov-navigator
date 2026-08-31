@@ -5,7 +5,7 @@
 - Entrant and copyright owner: 802 Flamingo LLC.
 - Public project name: Go Vermont Civic Navigator.
 - Quiet platform attribution: Powered by Better Gov Navigator.
-- Intended repository: `802-Flamingo/better-gov-navigator`.
+- Public repository: `https://github.com/802-Flamingo/better-gov-navigator`.
 
 The organization must confirm its own legal eligibility and acceptance of the
 official rules when the Devpost entry is submitted. This repository does not

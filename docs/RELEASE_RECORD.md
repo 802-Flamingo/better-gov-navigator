@@ -10,6 +10,7 @@
 - Deployment-specific rollback artifact:
   `https://better-gov-navigator-nh0h772s6-802-flamingo.vercel.app`
 - Expected incremental cost: `$0`
+- Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 
 The branded domain is attached directly to the isolated Vercel project. No
 private GoVermont code, API, runtime, or reverse proxy participates in the
@@ -37,10 +38,11 @@ an operator rollback artifact and is not represented as a public fallback.
   handoff, proposal, stale-revision, revocation, and zero-console-error checks.
 - Mobile checks at 320px and 390px passed without horizontal overflow or a
   mid-word rate-table header break.
+- An anonymous public clone passed the source validator, secret and symlink
+  scans, and all 37 tests on both public `main` and the exact production commit.
 
 ## Open release gates
 
-- Publish and verify the public GitHub repository from a clean checkout.
 - Enable the Chrome WebMCP testing flag with operator approval, then run the
   real Chrome discovery and execution canary.
 - Publish the public YouTube demonstration and complete the Devpost submission.

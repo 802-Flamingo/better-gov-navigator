@@ -2,8 +2,8 @@
 
 ## Feasibility
 
-- [ ] GitHub CLI authenticated to the authorized 802 Flamingo account.
-- [ ] Public repository exists and shows MIT license at repository top level.
+- [x] 802 Flamingo repository authority confirmed and public push succeeded.
+- [x] Public repository exists and shows MIT license at repository top level.
 - [x] Existing Vercel team capacity confirmed; no paid add-on required.
 - [x] `navigator.govermont.co` DNS and Vercel project authority confirmed.
 - [x] Real WebMCP is available in the ChatGPT in-app browser.
@@ -32,7 +32,8 @@
 - [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
 - [ ] Real Chrome 149+ discovery and call canary with WebMCP testing enabled.
 - [x] Production CSP and all security headers verified from the network edge.
-- [ ] Clean-checkout test and exact production SHA verification.
+- [x] Anonymous clean-checkout tests pass on public `main` and the exact
+  production SHA recorded by Vercel.
 
 ## Deployment
 
