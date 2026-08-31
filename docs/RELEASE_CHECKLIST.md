@@ -27,6 +27,8 @@
   failure tests pass.
 - [x] Resident body is absent from the email URL.
 - [x] 320px and 390px layouts have no horizontal overflow.
+- [x] Redesigned working surface verified at 1440x900, 390x844, and 320x844;
+  question entry, evidence, action selection, and draft review remain coherent.
 - [x] Native controls, semantic headings, described disclosures, source
   publishers, and live status announcements are present.
 - [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
@@ -43,6 +45,8 @@
 - [x] Attach `navigator.govermont.co` without proxying through GoVermont code.
 - [x] Confirm both branded and direct URLs; keep direct URL in submission notes.
 - [x] Confirm expected incremental cost remains $0.
+- [x] Deploy reviewed design PR #1 and verify exact production SHA
+  `8c555a75c98daee796c57d1e5cad414fdc64c85d`.
 
 ## Submission
 

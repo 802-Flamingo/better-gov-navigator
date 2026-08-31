@@ -3,12 +3,13 @@
 ## Production artifact
 
 - Recorded: August 31, 2026
-- Git commit: `c443a0a87084a0278602bef02dbd69202de69801`
-- Vercel deployment ID: `dpl_GdURgGzaUxkd8kFPhTLFEEdhbbWC`
+- Git commit: `8c555a75c98daee796c57d1e5cad414fdc64c85d`
+- Vercel deployment ID: `dpl_8b2bruq3Q5W6mZbFD2k3tQyCeTpG`
 - Branded URL: `https://navigator.govermont.co`
 - Direct fallback: `https://better-gov-navigator.vercel.app`
 - Deployment-specific rollback artifact:
-  `https://better-gov-navigator-nh0h772s6-802-flamingo.vercel.app`
+  `https://better-gov-navigator-nqevkxur8-802-flamingo.vercel.app`
+- Prior known-good rollback deployment: `dpl_GdURgGzaUxkd8kFPhTLFEEdhbbWC`
 - Expected incremental cost: `$0`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 
@@ -24,7 +25,7 @@ an operator rollback artifact and is not represented as a public fallback.
 
 - The production manifest contains eleven static files and no runtime API.
 - Vercel reports the deployment `READY` with exact `gitCommitSha`
-  `c443a0a87084a0278602bef02dbd69202de69801` and no dirty-tree marker.
+  `8c555a75c98daee796c57d1e5cad414fdc64c85d` and no dirty-tree marker.
 - The source pack contains ten official Waterbury or Vermont sources, three
   publishable facts, and four deterministic starting paths.
 - All 37 built-in validation, state, security, and tool-contract tests pass.
@@ -38,6 +39,12 @@ an operator rollback artifact and is not represented as a public fallback.
   handoff, proposal, stale-revision, revocation, and zero-console-error checks.
 - Mobile checks at 320px and 390px passed without horizontal overflow or a
   mid-word rate-table header break.
+- The focused civic-workspace redesign passed browser review at 1440x900,
+  390x844, and 320x844. The complete assessment path reached a deterministic
+  draft with no browser warnings or errors.
+- Production WebMCP re-verification showed zero tools before consent, four
+  bounded tools after consent, a successful read of synthetic approved state,
+  and zero tools immediately after revocation.
 - An anonymous public clone passed the source validator, secret and symlink
   scans, and all 37 tests on both public `main` and the exact production commit.
 
