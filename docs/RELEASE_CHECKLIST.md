@@ -45,8 +45,9 @@
 - [x] Attach `navigator.govermont.co` without proxying through GoVermont code.
 - [x] Confirm both branded and direct URLs; keep direct URL in submission notes.
 - [x] Confirm expected incremental cost remains $0.
-- [x] Deploy reviewed design PR #1 and verify exact production SHA
-  `8c555a75c98daee796c57d1e5cad414fdc64c85d`.
+- [x] Deploy reviewed design PR #1 and high-zoom evidence correction PR #2.
+- [x] Verify exact production SHA
+  `713d2f42379597448696c393b16bcfbafbd137ba`.
 
 ## Submission
 

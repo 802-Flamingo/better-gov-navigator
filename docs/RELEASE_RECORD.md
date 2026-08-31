@@ -3,13 +3,13 @@
 ## Production artifact
 
 - Recorded: August 31, 2026
-- Git commit: `8c555a75c98daee796c57d1e5cad414fdc64c85d`
-- Vercel deployment ID: `dpl_8b2bruq3Q5W6mZbFD2k3tQyCeTpG`
+- Git commit: `713d2f42379597448696c393b16bcfbafbd137ba`
+- Vercel deployment ID: `dpl_5wWMTvTUnhz54JkEfkKhNYYRUm4B`
 - Branded URL: `https://navigator.govermont.co`
 - Direct fallback: `https://better-gov-navigator.vercel.app`
 - Deployment-specific rollback artifact:
-  `https://better-gov-navigator-nqevkxur8-802-flamingo.vercel.app`
-- Prior known-good rollback deployment: `dpl_GdURgGzaUxkd8kFPhTLFEEdhbbWC`
+  `https://better-gov-navigator-dfldls5mo-802-flamingo.vercel.app`
+- Prior known-good rollback deployment: `dpl_8b2bruq3Q5W6mZbFD2k3tQyCeTpG`
 - Expected incremental cost: `$0`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 
@@ -25,7 +25,7 @@ an operator rollback artifact and is not represented as a public fallback.
 
 - The production manifest contains eleven static files and no runtime API.
 - Vercel reports the deployment `READY` with exact `gitCommitSha`
-  `8c555a75c98daee796c57d1e5cad414fdc64c85d` and no dirty-tree marker.
+  `713d2f42379597448696c393b16bcfbafbd137ba` and no dirty-tree marker.
 - The source pack contains ten official Waterbury or Vermont sources, three
   publishable facts, and four deterministic starting paths.
 - All 37 built-in validation, state, security, and tool-contract tests pass.
@@ -42,6 +42,9 @@ an operator rollback artifact and is not represented as a public fallback.
 - The focused civic-workspace redesign passed browser review at 1440x900,
   390x844, and 320x844. The complete assessment path reached a deterministic
   draft with no browser warnings or errors.
+- The official-records correction passed normal desktop, 200% reflow, and
+  390x844 checks. Exact reviewed findings remain available through native
+  disclosures without making long claims the default scanning surface.
 - Production WebMCP re-verification showed zero tools before consent, four
   bounded tools after consent, a successful read of synthetic approved state,
   and zero tools immediately after revocation.
