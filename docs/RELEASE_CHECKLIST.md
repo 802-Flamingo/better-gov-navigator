@@ -5,7 +5,7 @@
 - [ ] GitHub CLI authenticated to the authorized 802 Flamingo account.
 - [ ] Public repository exists and shows MIT license at repository top level.
 - [x] Existing Vercel team capacity confirmed; no paid add-on required.
-- [ ] `navigator.govermont.co` DNS and Vercel project authority confirmed.
+- [x] `navigator.govermont.co` DNS and Vercel project authority confirmed.
 - [x] Real WebMCP is available in the ChatGPT in-app browser.
 
 ## Core and data
@@ -17,7 +17,8 @@
 - [x] Ten official sources independently reviewed on August 31, 2026.
 - [x] Ambiguous municipal percentage, CLA, final levy, and calculator excluded.
 - [x] Exact source and destination allowlists pass.
-- [ ] Recheck every public fact and recipient immediately before release.
+- [x] Rechecked every public fact and recipient immediately before the recorded
+  Vercel release on August 31, 2026.
 
 ## Security and browser
 
@@ -28,18 +29,18 @@
 - [x] 320px and 390px layouts have no horizontal overflow.
 - [x] Native controls, semantic headings, described disclosures, source
   publishers, and live status announcements are present.
-- [ ] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
+- [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
 - [ ] Real Chrome 149+ discovery and call canary with WebMCP testing enabled.
-- [ ] Production CSP and all security headers verified from the network edge.
+- [x] Production CSP and all security headers verified from the network edge.
 - [ ] Clean-checkout test and exact production SHA verification.
 
 ## Deployment
 
-- [ ] Create direct Vercel production deployment and record URL.
-- [ ] Preserve a known-good rollback deployment and verify it independently.
-- [ ] Attach `navigator.govermont.co` without proxying through GoVermont code.
-- [ ] Confirm both branded and direct URLs; keep direct URL in submission notes.
-- [ ] Confirm expected incremental cost remains $0.
+- [x] Create direct Vercel production deployment and record URL.
+- [x] Preserve a known-good immutable deployment URL and verify it independently.
+- [x] Attach `navigator.govermont.co` without proxying through GoVermont code.
+- [x] Confirm both branded and direct URLs; keep direct URL in submission notes.
+- [x] Confirm expected incremental cost remains $0.
 
 ## Submission
 

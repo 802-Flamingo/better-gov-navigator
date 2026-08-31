@@ -52,10 +52,12 @@ permission; CSP sets `connect-src 'none'`.
 ## Links to fill at release
 
 - Live branded URL: `https://navigator.govermont.co`
-- Direct Vercel fallback: `TBD`
+- Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
+- Immutable release URL:
+  `https://better-gov-navigator-knim4tkte-802-flamingo.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `TBD`
+- Production commit: `5da7e6c886c24539f30e6a9250db93f25e93f06c`
 
 ## Technologies
 

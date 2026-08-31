@@ -10,6 +10,15 @@ Powered by **Better Gov Navigator**. Built and submitted by **802 Flamingo LLC**
 This is not a Town of Waterbury or State of Vermont website, and no government
 endorsement is implied.
 
+## Live application
+
+- Branded URL: <https://navigator.govermont.co>
+- Direct Vercel fallback: <https://better-gov-navigator.vercel.app>
+- Immutable release: <https://better-gov-navigator-knim4tkte-802-flamingo.vercel.app>
+
+The branded address is a direct Vercel project domain. It does not execute this
+application through the private GoVermont deployment.
+
 ## What it does
 
 The single-page workflow is fully usable without an assistant:
