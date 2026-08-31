@@ -1,0 +1,17 @@
+{
+  "name": "better-gov-navigator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "check": "npm run validate && npm test",
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test",
+    "test:security": "node --test tests/security.test.js",
+    "validate": "node scripts/validate-source-pack.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

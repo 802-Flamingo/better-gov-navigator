@@ -1,0 +1,13 @@
+.git
+.github
+*.md
+LICENSE
+NOTICE.md
+SECURITY.md
+SOURCES.md
+data/*.json
+docs
+scripts
+tests
+package.json
+package-lock.json

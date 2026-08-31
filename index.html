@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A source-backed Waterbury property-tax navigator that separates public facts from the questions an individual bill still requires."
+    >
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Go Vermont Civic Navigator">
+    <meta
+      property="og:description"
+      content="Understand what Waterbury's public tax records establish, what remains unknown, and where to start."
+    >
+    <link rel="canonical" href="https://navigator.govermont.co/">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Go Vermont Civic Navigator</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Go Vermont Civic Navigator home">
+        <span class="brand-mark" aria-hidden="true">VT</span>
+        <span>
+          <strong>Go Vermont</strong>
+          <small>Civic Navigator</small>
+        </span>
+      </a>
+      <p class="powered-by">Powered by Better Gov Navigator</p>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Waterbury, Vermont · 2026 property taxes</p>
+        <h1 id="page-title">Go Vermont Civic Navigator</h1>
+        <p class="intro-copy">
+          See what official records establish, what they cannot establish about
+          your bill, and the shortest accountable next step.
+        </p>
+        <p class="independence-note">
+          Independent civic information service. Not a municipal government website.
+        </p>
+      </section>
+
+      <section class="rate-band" aria-labelledby="rates-title">
+        <div class="section-inner">
+          <div class="section-heading compact-heading">
+            <div>
+              <p class="section-number">Source snapshot</p>
+              <h2 id="rates-title">Published 2026 rates</h2>
+            </div>
+            <p id="rate-unit" class="checked-date"></p>
+          </div>
+          <div id="rate-table"></div>
+        </div>
+      </section>
+
+      <section class="workflow-section" aria-labelledby="statement-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-number">1</p>
+            <div>
+              <h2 id="statement-title">What you told us</h2>
+              <p>Use your own words. The Navigator will not diagnose your bill.</p>
+            </div>
+          </div>
+
+          <label class="field-label" for="resident-statement">Your question</label>
+          <textarea
+            id="resident-statement"
+            name="resident-statement"
+            rows="5"
+            maxlength="1000"
+            aria-describedby="sensitive-entry-warning character-count"
+            placeholder="My 2026 Waterbury property tax bill is higher. What records should I review?"
+          ></textarea>
+          <div class="field-meta">
+            <p id="sensitive-entry-warning">
+              Do not include account numbers, Social Security numbers, payment
+              information, or other sensitive details.
+            </p>
+            <p id="character-count" aria-live="polite">0 / 1000</p>
+          </div>
+
+          <div id="proposal-panel" class="proposal-panel" hidden>
+            <p class="proposal-label">Suggested by your assistant</p>
+            <p id="proposal-summary"></p>
+            <ul id="proposal-questions"></ul>
+            <div class="button-row">
+              <button id="accept-proposal" type="button">Use this wording</button>
+              <button id="reject-proposal" class="secondary-button" type="button">
+                Keep my wording
+              </button>
+            </div>
+          </div>
+
+          <div class="sharing-row">
+            <div>
+              <p class="sharing-title">Assistant sharing</p>
+              <p id="assistant-status">
+                Off. Your notes remain only in this page's memory.
+              </p>
+            </div>
+            <label class="switch-label">
+              <input
+                id="assistant-consent"
+                type="checkbox"
+                aria-describedby="assistant-status assistant-sharing-detail"
+              >
+              <span>Share this case with my assistant</span>
+            </label>
+          </div>
+          <p id="assistant-sharing-detail" class="sharing-detail">
+            Turning this on exposes the case text to your selected assistant and
+            its provider for this page session. Turning it off prevents future
+            access but cannot retract information already returned.
+          </p>
+        </div>
+      </section>
+
+      <section class="workflow-section alternate" aria-labelledby="facts-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-number">2</p>
+            <div>
+              <h2 id="facts-title">What public sources confirm</h2>
+              <p>Every statement below links to the official record behind it.</p>
+            </div>
+          </div>
+          <div id="facts-list" class="evidence-list"></div>
+        </div>
+      </section>
+
+      <section class="workflow-section" aria-labelledby="unknowns-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-number">3</p>
+            <div>
+              <h2 id="unknowns-title">What is still unclear</h2>
+              <p>These details can change an individual bill.</p>
+            </div>
+          </div>
+          <ul id="unknowns-list" class="unknowns-list"></ul>
+        </div>
+      </section>
+
+      <section class="workflow-section alternate" aria-labelledby="paths-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-number">4</p>
+            <div>
+              <h2 id="paths-title">Where to start</h2>
+              <p>Choose the kind of help you need, then review the source-backed path.</p>
+            </div>
+          </div>
+
+          <fieldset class="choice-group">
+            <legend>What do you need help with?</legend>
+            <div id="need-options"></div>
+          </fieldset>
+
+          <div id="path-options" class="path-options" aria-live="polite"></div>
+          <button id="prepare-draft" type="button" disabled>Prepare draft</button>
+        </div>
+      </section>
+
+      <section class="workflow-section" aria-labelledby="draft-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-number">5</p>
+            <div>
+              <h2 id="draft-title">Your draft to review</h2>
+              <p>Go Vermont does not send this message.</p>
+            </div>
+          </div>
+
+          <p id="draft-empty" class="empty-state">
+            Add your question and choose a starting point to prepare a draft.
+          </p>
+
+          <div id="draft-content" hidden>
+            <dl class="draft-details">
+              <div>
+                <dt>Recipient or process</dt>
+                <dd id="draft-recipient"></dd>
+              </div>
+              <div>
+                <dt>Purpose</dt>
+                <dd id="draft-purpose"></dd>
+              </div>
+              <div>
+                <dt>Subject</dt>
+                <dd id="draft-subject"></dd>
+              </div>
+            </dl>
+            <p class="field-label">Draft body</p>
+            <pre id="draft-body" class="draft-body"></pre>
+
+            <label class="review-check">
+              <input id="draft-reviewed" type="checkbox">
+              <span>I reviewed both the recipient and the wording.</span>
+            </label>
+
+            <div class="button-row">
+              <button id="copy-draft" type="button" disabled>Copy draft</button>
+              <a id="open-email" class="command-link" href="#" hidden>
+                Open in my email app
+              </a>
+              <a
+                id="appointment-link"
+                class="command-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+              >
+                Open official appointment page
+              </a>
+            </div>
+            <p id="contact-detail" class="contact-detail"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-controls" aria-label="Case controls">
+        <div class="section-inner control-inner">
+          <p>This case is kept only in page memory and disappears on reload.</p>
+          <button id="clear-case" class="danger-button" type="button">Clear this case</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Go Vermont Civic Navigator is an independent demonstration by 802 Flamingo LLC.
+      </p>
+      <p>
+        <a
+          href="https://github.com/802-Flamingo/better-gov-navigator"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Public source code</a>
+        · Checked August 31, 2026
+      </p>
+    </footer>
+
+    <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+
+    <noscript>
+      <p class="noscript-message">JavaScript is required for this local, interactive workflow.</p>
+    </noscript>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
