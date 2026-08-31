@@ -47,6 +47,12 @@ const elements = {
 let statusTimer;
 let lastAnnouncedRevision = -1;
 
+const FACT_TITLES = Object.freeze({
+  "waterbury-2026-rates": "Published 2026 tax rates",
+  "waterbury-2026-change-pattern": "How the published rates changed",
+  "vermont-property-classification": "Homestead and nonhomestead property",
+});
+
 function createElement(tag, { className, text } = {}) {
   const element = document.createElement(tag);
   if (className) {
@@ -79,6 +85,25 @@ function appendOfficialLink(parent, source, labelPrefix = "Official source") {
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   parent.append(link);
+}
+
+function appendCompactSourceLink(parent, source) {
+  const link = createElement("a", { text: source.title });
+  link.href = source.url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.setAttribute("aria-label", `Official source: ${source.publisher}, ${source.title}`);
+  parent.append(link);
+}
+
+function formatCheckedDate(dateString) {
+  const date = new Date(`${dateString}T12:00:00Z`);
+  return new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+    year: "numeric",
+  }).format(date);
 }
 
 function renderRates() {
@@ -122,16 +147,39 @@ function renderFacts() {
   const fragment = document.createDocumentFragment();
   for (const fact of projectFacts()) {
     const item = createElement("article", { className: "evidence-item" });
-    item.append(createElement("p", { text: fact.statement }));
 
-    const context = createElement("div", { className: "evidence-context" });
-    context.append(createElement("p", { text: `Limit: ${fact.limitation}` }));
+    const heading = createElement("div", { className: "evidence-heading" });
+    heading.append(
+      createElement("p", {
+        className: "evidence-status",
+        text: `Verified record · Checked ${formatCheckedDate(fact.checkedAt)}`,
+      }),
+      createElement("h3", {
+        text: FACT_TITLES[fact.id] ?? "Official civic record",
+      }),
+    );
+
+    const details = createElement("details", { className: "evidence-details" });
+    details.append(createElement("summary", { text: "Read the exact finding and limitation" }));
+    const detailBody = createElement("div", { className: "evidence-detail-body" });
+    detailBody.append(
+      createElement("p", { className: "fact-statement", text: fact.statement }),
+      createElement("p", {
+        className: "fact-limitation",
+        text: `What this does not tell you: ${fact.limitation}`,
+      }),
+    );
+    details.append(detailBody);
+
+    const sources = createElement("div", { className: "evidence-sources" });
+    sources.append(createElement("p", { className: "source-label", text: "Official records" }));
     const links = createElement("div", { className: "source-links" });
     for (const source of fact.sources) {
-      appendOfficialLink(links, source);
+      appendCompactSourceLink(links, source);
     }
-    context.append(links);
-    item.append(context);
+    sources.append(links);
+
+    item.append(heading, details, sources);
     fragment.append(item);
   }
   elements.factsList.replaceChildren(fragment);
