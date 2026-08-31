@@ -112,10 +112,10 @@ function renderRates() {
   }
   table.append(body);
   elements.rateTable.replaceChildren(table);
-  elements.rateUnit.textContent = `${CIVIC_DATA.rates.unit} · Checked August 31, 2026${historical ? " · Historical record" : ""}`;
+  elements.rateUnit.textContent = `$ per $100 assessed · Checked Aug. 31, 2026${historical ? " · Historical" : ""}`;
   document.querySelector("#rates-title").textContent = historical
-    ? "Historical 2026 published rates"
-    : "Published 2026 rates";
+    ? "Waterbury 2026 rates — historical"
+    : "Waterbury 2026 rates";
 }
 
 function renderFacts() {
