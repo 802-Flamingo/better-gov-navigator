@@ -1,5 +1,6 @@
 .git
 .github
+.vercelignore
 *.md
 LICENSE
 NOTICE.md
