@@ -3,9 +3,10 @@
 ## Scope
 
 The frozen source pack was reviewed on August 31, 2026. It covers one town, one
-tax year, two Vermont property classifications, three published rate rows, and
-four accountable starting points. It is not a tax calculator and does not
-explain why any individual bill changed.
+primary tax year with a limited 2025 comparator, two Vermont property
+classifications, three published rate rows, and four accountable starting
+points. It is not a tax calculator and does not explain why any individual bill
+changed.
 
 Published units are dollars per $100 of assessed value. The classifications are
 homestead and nonhomestead. A null `effectiveDate` means the source did not

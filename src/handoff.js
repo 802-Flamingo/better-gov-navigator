@@ -1,8 +1,6 @@
 import { ERROR_CODES, NavigatorError } from "./errors.js";
 
-const SUBJECT = "Waterbury property tax question";
-
-export function createHandoffDraft({ statement, need, path }) {
+export function createHandoffDraft({ statement, need, path, townName }) {
   if (typeof statement !== "string" || statement.trim().length === 0) {
     throw new NavigatorError(
       ERROR_CODES.NO_STATEMENT,
@@ -10,10 +8,19 @@ export function createHandoffDraft({ statement, need, path }) {
     );
   }
 
+  if (typeof townName !== "string" || townName.trim().length === 0) {
+    throw new NavigatorError(
+      ERROR_CODES.UNSUPPORTED_CONTEXT,
+      "A reviewed municipality is required before preparing a draft.",
+    );
+  }
+
+  const reviewedTownName = townName.trim();
+
   const body = [
     path.salutation,
     "",
-    "I am looking for help with a Waterbury property tax question.",
+    `I am looking for help with a ${reviewedTownName} property tax question.`,
     "",
     "What I am asking:",
     statement.trim(),
@@ -31,7 +38,7 @@ export function createHandoffDraft({ statement, need, path }) {
     recipientEmail: path.email ?? null,
     contactMode: path.contactMode,
     purpose: need.label,
-    subject: SUBJECT,
+    subject: `${reviewedTownName} property tax question`,
     body,
     pathId: path.id,
     sourceId: path.sourceId,

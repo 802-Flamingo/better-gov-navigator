@@ -72,6 +72,22 @@ test("registers exactly four bounded tools once", async () => {
   );
 });
 
+test("registers zero tools before the resident grants consent", async () => {
+  const store = createNavigatorStore();
+  const modelContext = modelContextMock();
+  const controller = createWebMCPController({ store, modelContext });
+
+  const result = await controller.register();
+  assert.deepEqual(result, {
+    available: true,
+    registered: false,
+    count: 0,
+    reason: "CONSENT_REQUIRED",
+  });
+  assert.equal(modelContext.registrations.length, 0);
+  assert.equal(controller.isRegistered(), false);
+});
+
 test("abort lifecycle removes every registration", async () => {
   const store = await consentedStore();
   const modelContext = modelContextMock();
@@ -79,6 +95,33 @@ test("abort lifecycle removes every registration", async () => {
   await controller.register();
   controller.stop();
   assert.equal(modelContext.registrations.every(({ active }) => !active), true);
+});
+
+test("a captured tool handle refuses access after consent is revoked", async () => {
+  const store = await consentedStore();
+  const controller = createWebMCPController({ store, modelContext: modelContextMock() });
+  const read = controller
+    .definitionsForTest()
+    .find(({ name }) => name === "get_handoff_state");
+
+  assert.equal((await read.execute({})).ok, true);
+  await store.setConsent(false);
+  const revoked = await read.execute({});
+  assert.equal(revoked.ok, false);
+  assert.equal(revoked.error.code, "CONSENT_REQUIRED");
+});
+
+test("register called after revocation aborts an existing lifecycle", async () => {
+  const store = await consentedStore();
+  const modelContext = modelContextMock();
+  const controller = createWebMCPController({ store, modelContext });
+  await controller.register();
+  await store.setConsent(false);
+
+  const result = await controller.register();
+  assert.equal(result.registered, false);
+  assert.equal(modelContext.registrations.every(({ active }) => !active), true);
+  assert.equal(controller.isRegistered(), false);
 });
 
 test("partial registration failure aborts all registrations", async () => {
@@ -127,6 +170,21 @@ test("revocation during registration aborts the entire lifecycle", async () => {
   assert.equal(controller.isRegistered(), false);
 });
 
+test("consent revocation alone aborts registration still in flight", async () => {
+  const store = await consentedStore();
+  const modelContext = delayedModelContextMock();
+  const controller = createWebMCPController({ store, modelContext });
+
+  const registration = controller.register();
+  await new Promise((resolve) => setImmediate(resolve));
+  await store.setConsent(false);
+  modelContext.releaseFirst();
+
+  await assert.rejects(registration, { code: "CANCELLED" });
+  assert.equal(modelContext.registrations.every(({ active }) => !active), true);
+  assert.equal(controller.isRegistered(), false);
+});
+
 test("tool execution validates inputs at runtime", async () => {
   const store = await consentedStore();
   const controller = createWebMCPController({ store, modelContext: modelContextMock() });
@@ -136,6 +194,18 @@ test("tool execution validates inputs at runtime", async () => {
 
   assert.equal((await read.execute({ extra: true })).error.code, "INVALID_INPUT");
   assert.equal((await prepare.execute({ revision: 1, body: "attacker" })).error.code, "INVALID_INPUT");
+});
+
+test("mutation schemas publish the safe-integer revision ceiling", async () => {
+  const store = await consentedStore();
+  const controller = createWebMCPController({ store, modelContext: modelContextMock() });
+  for (const name of ["prepare_handoff", "propose_case_update"]) {
+    const definition = controller.definitionsForTest().find((tool) => tool.name === name);
+    assert.equal(
+      definition.inputSchema.properties.revision.maximum,
+      Number.MAX_SAFE_INTEGER,
+    );
+  }
 });
 
 test("assistant tool stages a deterministic draft without reviewing it", async () => {

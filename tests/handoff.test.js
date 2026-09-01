@@ -8,6 +8,7 @@ test("handoff is deterministic and separates generic subject from resident text"
     statement: "My bill is higher and I want to understand the billing record.",
     need: getNeed("bill-payment"),
     path: getPath("waterbury-property-tax-billing"),
+    townName: "Waterbury",
   });
 
   assert.equal(draft.subject, "Waterbury property tax question");
@@ -22,6 +23,7 @@ test("handoff for a records path does not invent an email", () => {
     statement: "I want to understand the municipal budget record.",
     need: getNeed("municipal-budget"),
     path: getPath("waterbury-budget-records"),
+    townName: "Waterbury",
   });
 
   assert.equal(draft.recipientEmail, null);

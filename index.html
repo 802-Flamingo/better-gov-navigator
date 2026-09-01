@@ -19,6 +19,7 @@
     <title>Go Vermont Civic Navigator</title>
   </head>
   <body>
+    <a class="skip-link" href="#starting-point">Skip to choosing a starting point</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Go Vermont Civic Navigator home">
         <span class="brand-mark" aria-hidden="true">VT</span>
@@ -38,12 +39,16 @@
             <h1 id="page-title">Go Vermont Civic Navigator</h1>
             <p class="intro-copy">
               Understand what public records establish, what they cannot explain
-              about your bill, and the right office to ask next.
+              about your bill, and a reviewed place to start.
+            </p>
+            <p class="scope-note">
+              Purpose-built for Waterbury 2026: ten reviewed official sources and
+              four accountable paths.
             </p>
           </div>
           <aside class="independence-note" aria-label="Service boundary">
             <strong>Independent civic guidance</strong>
-            <span>Not a municipal website. Nothing is sent on your behalf.</span>
+            <span>Not a municipal or State of Vermont website. Nothing is sent on your behalf.</span>
           </aside>
         </div>
 
@@ -52,8 +57,8 @@
             <div class="section-heading question-heading">
               <p class="section-number">1</p>
               <div>
-                <h2 id="statement-title">Start with your question</h2>
-                <p>Use your own words. The Navigator will not diagnose your bill.</p>
+              <h2 id="statement-title">Start with your question</h2>
+                <p>Use your own words for the draft. The Navigator will not diagnose or automatically route your bill.</p>
               </div>
             </div>
 
@@ -71,15 +76,18 @@
                 Do not include account numbers, Social Security numbers, payment
                 information, or other sensitive details.
               </p>
-              <p id="character-count" aria-live="polite">0 / 1000</p>
+              <p id="character-count">0 / 1000</p>
             </div>
 
             <div id="proposal-panel" class="proposal-panel" hidden>
               <p class="proposal-label">Suggested by your assistant</p>
               <p id="proposal-summary"></p>
+              <p class="proposal-question-label">
+                Questions this would add to "What is still unclear"
+              </p>
               <ul id="proposal-questions"></ul>
               <div class="button-row">
-                <button id="accept-proposal" type="button">Use this wording</button>
+                <button id="accept-proposal" type="button">Use wording and questions</button>
                 <button id="reject-proposal" class="secondary-button" type="button">
                   Keep my wording
                 </button>
@@ -88,7 +96,7 @@
 
             <div class="sharing-row">
               <div>
-                <p class="sharing-title">Assistant sharing</p>
+                <p class="sharing-title">Optional: assistant collaboration</p>
                 <p id="assistant-status">
                   Off. Your notes remain only in this page's memory.
                 </p>
@@ -101,14 +109,20 @@
                   aria-describedby="assistant-status assistant-sharing-detail"
                 >
                 <span class="switch-track" aria-hidden="true"></span>
-                <span>Share with my assistant</span>
+                <span>Share with this page's assistant</span>
               </label>
             </div>
             <p id="assistant-sharing-detail" class="sharing-detail">
-              Turning this on exposes the case text to your selected assistant and
-              its provider for this page session. Turning it off prevents future
-              access but cannot retract information already returned.
+              Available only when this page is hosted by a WebMCP-capable
+              assistant or browser. Turning this on exposes the case text to the
+              assistant connected to this page and its provider for this session.
+              Turning it off prevents future access but cannot retract information
+              already returned.
             </p>
+
+            <a class="command-link next-step-link" href="#starting-point">
+              Next: choose what you need
+            </a>
           </section>
 
           <section class="rate-card" aria-labelledby="rates-title">
@@ -178,6 +192,9 @@
 
           <div id="path-options" class="path-options" aria-live="polite"></div>
           <button id="prepare-draft" type="button" disabled>Prepare draft</button>
+          <a id="review-draft-link" class="command-link draft-ready-link" href="#your-draft" hidden>
+            Draft ready: review destination and wording
+          </a>
         </div>
       </section>
 
@@ -215,24 +232,33 @@
 
             <label class="review-check">
               <input id="draft-reviewed" type="checkbox">
-              <span>I reviewed both the recipient and the wording.</span>
+              <span id="draft-review-label">I reviewed both the destination and the wording.</span>
             </label>
 
             <div class="button-row">
               <button id="copy-draft" type="button" disabled>Copy draft</button>
-              <a id="open-email" class="command-link" href="#" hidden>
+              <button id="open-email" class="command-link" type="button" hidden>
                 Open in my email app
-              </a>
-              <a
+              </button>
+              <button
                 id="appointment-link"
                 class="command-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+                type="button"
                 hidden
               >
                 Open official appointment page
-              </a>
+              </button>
+              <button id="phone-link" class="command-link" type="button" hidden>
+                Call official number
+              </button>
+              <button
+                id="records-link"
+                class="command-link"
+                type="button"
+                hidden
+              >
+                Open official public-process page
+              </button>
             </div>
             <p id="contact-detail" class="contact-detail"></p>
           </div>

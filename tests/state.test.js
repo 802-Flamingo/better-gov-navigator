@@ -52,6 +52,86 @@ test("assistant proposal stages without replacing resident text", async () => {
   );
 });
 
+test("assistant cannot propose wording before the resident chooses a fresh path", async () => {
+  const store = createNavigatorStore({ now: checkedDate });
+  await store.setStatement("My bill changed.");
+  await store.setConsent(true);
+  const revision = store.getSnapshot().revision;
+
+  await assert.rejects(
+    store.proposeForAssistant(
+      {
+        revision,
+        proposedSummary: "Please help me understand the changed bill.",
+        unresolvedQuestions: [],
+      },
+      new AbortController().signal,
+    ),
+    { code: "NO_PATH_SELECTED" },
+  );
+});
+
+test("assistant cannot create the resident's initial case wording", async () => {
+  const store = createNavigatorStore({ now: checkedDate });
+  await store.selectNeed("bill-payment");
+  await store.selectPath("waterbury-property-tax-billing");
+  await store.setConsent(true);
+  const revision = store.getSnapshot().revision;
+
+  await assert.rejects(
+    store.proposeForAssistant(
+      {
+        revision,
+        proposedSummary: "Assistant-authored initial case.",
+        unresolvedQuestions: [],
+      },
+      new AbortController().signal,
+    ),
+    { code: "NO_STATEMENT" },
+  );
+});
+
+test("assistant state reports a proposal without echoing its full text", async () => {
+  const store = await readyStore({ consent: true });
+  const revision = store.getSnapshot().revision;
+  await store.proposeForAssistant(
+    {
+      revision,
+      proposedSummary: "Proposed wording that should remain in the resident review surface.",
+      unresolvedQuestions: ["Did the assessed value change?"],
+    },
+    new AbortController().signal,
+  );
+
+  assert.deepEqual(store.readForAssistant().case.pendingProposal, {
+    awaitingResidentReview: true,
+    unresolvedQuestionCount: 1,
+  });
+});
+
+test("assistant state stays within a compact response budget", async () => {
+  const store = await readyStore({ consent: true });
+  const response = store.readForAssistant();
+  assert.equal(Buffer.byteLength(JSON.stringify(response), "utf8") < 2048, true);
+});
+
+test("assistant path read is grounded in reviewed evidence and canonical unknowns", async () => {
+  const store = await readyStore({ consent: true });
+  const response = store.pathsForAssistant();
+
+  assert.equal(response.paths.length, 1);
+  assert.equal(response.evidence.length, 3);
+  assert.equal(response.canonicalUnknowns.length, 4);
+  assert.equal(
+    response.evidence.every(
+      (fact) => fact.statement && fact.limitation && fact.sourceUrls.length > 0,
+    ),
+    true,
+  );
+  assert.doesNotMatch(JSON.stringify(response), /51\.06|0\.47%|final approved levy/i);
+  assert.equal(Buffer.byteLength(JSON.stringify(response), "utf8") < 8192, true);
+});
+
 test("two assistant mutations at one revision yield one stale rejection", async () => {
   const store = await readyStore({ consent: true });
   const revision = store.getSnapshot().revision;
@@ -147,11 +227,38 @@ test("revocation clears assistant-generated content but keeps resident wording",
   assert.match(store.getSnapshot().statement, /Waterbury/);
 });
 
-test("stale path refuses to prepare a draft", async () => {
-  const store = createNavigatorStore({ now: () => new Date("2026-10-01T00:00:00Z") });
+test("stale path refuses to prepare a draft after the Vermont cutoff date", async () => {
+  const store = createNavigatorStore({ now: () => new Date("2026-10-01T04:00:00Z") });
   await store.setStatement("I have a billing question.");
   await store.selectNeed("bill-payment");
   await assert.rejects(store.selectPath("waterbury-property-tax-billing"), {
     code: "STALE_SOURCE",
   });
+});
+
+test("a prepared draft cannot be reviewed after its destination expires", async () => {
+  let now = new Date("2026-09-30T12:00:00Z");
+  const store = createNavigatorStore({ now: () => now });
+  await store.setStatement("I have a billing question.");
+  await store.selectNeed("bill-payment");
+  await store.selectPath("waterbury-property-tax-billing");
+  await store.prepareManualDraft();
+  now = new Date("2026-10-01T04:00:00Z");
+
+  await assert.rejects(store.reviewDraft(true), { code: "STALE_SOURCE" });
+  assert.equal(store.getSnapshot().draft.reviewed, false);
+});
+
+test("an already reviewed draft stops being actionable after expiry", async () => {
+  let now = new Date("2026-09-30T12:00:00Z");
+  const store = createNavigatorStore({ now: () => now });
+  await store.setStatement("I have a billing question.");
+  await store.selectNeed("bill-payment");
+  await store.selectPath("waterbury-property-tax-billing");
+  await store.prepareManualDraft();
+  await store.reviewDraft(true);
+  assert.equal(store.getActionableDraft().reviewed, true);
+
+  now = new Date("2026-10-01T04:00:00Z");
+  assert.throws(() => store.getActionableDraft(), { code: "STALE_SOURCE" });
 });

@@ -29,13 +29,30 @@ export function isPathStale(path, now = new Date()) {
   if (!path?.staleAfter) {
     return false;
   }
-  const cutoff = new Date(`${path.staleAfter}T23:59:59Z`);
-  return Number.isNaN(cutoff.getTime()) || now.getTime() > cutoff.getTime();
+  return !isDateOnly(path.staleAfter) || easternDate(now) > path.staleAfter;
 }
 
 export function ratesAreHistorical(now = new Date()) {
-  const cutoff = new Date(`${CIVIC_DATA.rates.historicalAfter}T23:59:59Z`);
-  return Number.isNaN(cutoff.getTime()) || now.getTime() > cutoff.getTime();
+  const cutoff = CIVIC_DATA.rates.historicalAfter;
+  return !isDateOnly(cutoff) || easternDate(now) > cutoff;
+}
+
+function isDateOnly(value) {
+  return /^\d{4}-\d{2}-\d{2}$/u.test(value ?? "");
+}
+
+function easternDate(now) {
+  if (!(now instanceof Date) || Number.isNaN(now.getTime())) {
+    return "9999-12-31";
+  }
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    day: "2-digit",
+    month: "2-digit",
+    timeZone: "America/New_York",
+    year: "numeric",
+  }).formatToParts(now);
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 export function findPathsForNeed(needId, now = new Date()) {
@@ -43,7 +60,7 @@ export function findPathsForNeed(needId, now = new Date()) {
   if (!need) {
     throw new NavigatorError(
       ERROR_CODES.UNSUPPORTED_CONTEXT,
-      "Choose one of the supported Waterbury property-tax needs.",
+      `Choose one of the supported ${CIVIC_DATA.town.name} property-tax needs.`,
     );
   }
 

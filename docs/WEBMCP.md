@@ -4,7 +4,7 @@
 
 Tools are registered imperatively from the top-level page through
 `document.modelContext.registerTool`. Registration starts only after the
-resident turns on `Share this case with my assistant`.
+resident turns on `Share with this page's assistant`.
 
 One abort controller owns the complete registration lifecycle. Concurrent
 registration calls share one promise. Revocation, page exit, partial failure,
@@ -30,7 +30,9 @@ prevents future access but cannot retract information already returned.
 - Input: exact empty object.
 - Read only: yes.
 - Returns: immutable reviewed paths for the need already chosen by the resident,
-  with source, limitation, checked date, and stale status.
+  with source, limitation, checked date, and stale status; also returns the three
+  reviewed civic claims, their limitations and source URLs, and the canonical
+  unknowns that must bound any assistant proposal.
 
 ### `prepare_handoff`
 
@@ -44,6 +46,8 @@ prevents future access but cannot retract information already returned.
 - Input: current `revision`, one 1-1,000 character summary, and zero to six
   unanswered questions of at most 200 characters each.
 - Read only: no.
+- Preconditions: the resident has entered a non-empty question and chosen a
+  fresh reviewed path.
 - Effect: stages wording for explicit resident acceptance. It cannot modify
   accepted text, civic facts, sources, town, topic, need, path, recipient, or
   an existing draft.

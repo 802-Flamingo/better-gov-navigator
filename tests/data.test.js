@@ -36,8 +36,10 @@ test("every supported need projects one fresh path on the checked date", () => {
 });
 
 test("contact paths become stale after the configured cutoff", () => {
-  const paths = findPathsForNeed("bill-payment", new Date("2026-10-01T00:00:00Z"));
-  assert.equal(paths[0].stale, true);
+  const evening = findPathsForNeed("bill-payment", new Date("2026-10-01T00:00:00Z"));
+  const nextLocalDay = findPathsForNeed("bill-payment", new Date("2026-10-01T04:00:00Z"));
+  assert.equal(evening[0].stale, false);
+  assert.equal(nextLocalDay[0].stale, true);
 });
 
 test("withheld claims are absent from published facts", () => {
@@ -52,7 +54,15 @@ test("email paths use municipal allowlisted addresses", () => {
   assert.equal(getPath("waterbury-assessment-questions").email, "dsweet@waterburyvt.com");
 });
 
+test("records path uses the exact official public-process destination", () => {
+  assert.equal(
+    getPath("waterbury-budget-records").recordsUrl,
+    "https://www.waterburyvt.com/boards/selectboard",
+  );
+});
+
 test("published rates transition to an explicit historical record", () => {
   assert.equal(ratesAreHistorical(new Date("2027-06-30T12:00:00Z")), false);
-  assert.equal(ratesAreHistorical(new Date("2027-07-01T00:00:00Z")), true);
+  assert.equal(ratesAreHistorical(new Date("2027-07-01T00:00:00Z")), false);
+  assert.equal(ratesAreHistorical(new Date("2027-07-01T04:00:00Z")), true);
 });

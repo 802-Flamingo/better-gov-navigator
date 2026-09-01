@@ -16,6 +16,8 @@
 - Partial or duplicate WebMCP registration.
 - A changed source URL, contact, phone, appointment URL, or source mapping.
 - A stale contact or tax year presented as current.
+- A draft prepared before contact expiry remaining actionable after expiry.
+- Assistant-suggested questions appearing to be reviewed civic facts.
 - Accidental inclusion of resident text in a request, URL, analytics event, or
   email link.
 - Repository secret leakage or dependency supply-chain compromise.
@@ -35,7 +37,9 @@
 - One registration lifecycle and one serialized mutation queue.
 - Consent, cancellation, generation, source freshness, and revision checks.
 - Partial registration abort and last-known manual interface.
-- Human review before copy or navigation; no automatic contact.
+- Human review before copy or navigation; no automatic contact. Destination
+  command buttons contain no dormant URL and recheck freshness on activation.
+- Assistant questions retain explicit provenance before and after acceptance.
 - Generic-subject `mailto:` with no body or resident text.
 - Contact expiry after 30 days and automatic historical labeling for rates.
 - MIT license, trademark boundary, non-endorsement notice, and public source

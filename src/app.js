@@ -3,6 +3,7 @@ import {
   findPathsForNeed,
   getPath,
   getSource,
+  isPathStale,
   projectFacts,
   ratesAreHistorical,
 } from "./civic-data.js";
@@ -27,18 +28,22 @@ const elements = {
   draftPurpose: document.querySelector("#draft-purpose"),
   draftRecipient: document.querySelector("#draft-recipient"),
   draftReviewed: document.querySelector("#draft-reviewed"),
+  draftReviewLabel: document.querySelector("#draft-review-label"),
   draftSubject: document.querySelector("#draft-subject"),
   factsList: document.querySelector("#facts-list"),
   needOptions: document.querySelector("#need-options"),
   openEmail: document.querySelector("#open-email"),
   pathOptions: document.querySelector("#path-options"),
+  phoneLink: document.querySelector("#phone-link"),
   prepareDraft: document.querySelector("#prepare-draft"),
   proposalPanel: document.querySelector("#proposal-panel"),
   proposalQuestions: document.querySelector("#proposal-questions"),
   proposalSummary: document.querySelector("#proposal-summary"),
   rateTable: document.querySelector("#rate-table"),
   rateUnit: document.querySelector("#rate-unit"),
+  recordsLink: document.querySelector("#records-link"),
   rejectProposal: document.querySelector("#reject-proposal"),
+  reviewDraftLink: document.querySelector("#review-draft-link"),
   statement: document.querySelector("#resident-statement"),
   status: document.querySelector("#status-message"),
   unknownsList: document.querySelector("#unknowns-list"),
@@ -110,7 +115,7 @@ function renderRates() {
   const historical = ratesAreHistorical();
   const table = createElement("table", { className: "rate-table" });
   const caption = createElement("caption", {
-    text: `Waterbury ${CIVIC_DATA.rates.year} property-tax rates, ${CIVIC_DATA.rates.unit}`,
+    text: `${CIVIC_DATA.town.name} ${CIVIC_DATA.rates.year} property-tax rates, ${CIVIC_DATA.rates.unit}`,
   });
   caption.className = "visually-hidden";
   table.append(caption);
@@ -139,8 +144,8 @@ function renderRates() {
   elements.rateTable.replaceChildren(table);
   elements.rateUnit.textContent = `$ per $100 assessed · Checked Aug. 31, 2026${historical ? " · Historical" : ""}`;
   document.querySelector("#rates-title").textContent = historical
-    ? "Waterbury 2026 rates — historical"
-    : "Waterbury 2026 rates";
+    ? `${CIVIC_DATA.town.name} ${CIVIC_DATA.rates.year} rates — historical`
+    : `${CIVIC_DATA.town.name} ${CIVIC_DATA.rates.year} rates`;
 }
 
 function renderFacts() {
@@ -152,7 +157,7 @@ function renderFacts() {
     heading.append(
       createElement("p", {
         className: "evidence-status",
-        text: `Verified record · Checked ${formatCheckedDate(fact.checkedAt)}`,
+        text: `Reviewed claim · Checked ${formatCheckedDate(fact.checkedAt)}`,
       }),
       createElement("h3", {
         text: FACT_TITLES[fact.id] ?? "Official civic record",
@@ -160,7 +165,12 @@ function renderFacts() {
     );
 
     const details = createElement("details", { className: "evidence-details" });
-    details.append(createElement("summary", { text: "Read the exact finding and limitation" }));
+    const summary = createElement("summary", { text: "Read the exact finding and limitation" });
+    summary.setAttribute(
+      "aria-label",
+      `Read the exact finding and limitation for ${FACT_TITLES[fact.id] ?? "this official civic record"}`,
+    );
+    details.append(summary);
     const detailBody = createElement("div", { className: "evidence-detail-body" });
     detailBody.append(
       createElement("p", { className: "fact-statement", text: fact.statement }),
@@ -212,7 +222,7 @@ function renderUnknowns(state) {
   for (const question of questions) {
     const item = createElement("li", {
       className: question.assistant ? "assistant-question" : "",
-      text: question.text,
+      text: question.assistant ? `Assistant suggestion: ${question.text}` : question.text,
     });
     fragment.append(item);
   }
@@ -290,9 +300,12 @@ function renderDraft(state) {
   const draft = state.draft;
   elements.draftEmpty.hidden = Boolean(draft);
   elements.draftContent.hidden = !draft;
+  elements.reviewDraftLink.hidden = !draft;
   if (!draft) {
     elements.openEmail.hidden = true;
     elements.appointmentLink.hidden = true;
+    elements.phoneLink.hidden = true;
+    elements.recordsLink.hidden = true;
     return;
   }
 
@@ -300,14 +313,29 @@ function renderDraft(state) {
   elements.draftPurpose.textContent = draft.purpose;
   elements.draftSubject.textContent = draft.subject;
   elements.draftBody.textContent = draft.body;
-  elements.draftReviewed.checked = draft.reviewed;
-  elements.copyDraft.disabled = !draft.reviewed;
 
   const path = getPath(draft.pathId);
   const source = getSource(draft.sourceId);
+  const pathStale = isPathStale(path);
+  const actionable = draft.reviewed && !pathStale;
+  elements.draftReviewed.checked = actionable;
+  elements.draftReviewed.disabled = pathStale;
+  elements.copyDraft.disabled = !actionable;
   const contactParts = [];
+  if (path?.email) {
+    contactParts.push(`Email: ${path.email}`);
+  }
   if (path?.phone) {
     contactParts.push(`Phone: ${path.phone}`);
+  }
+  if (path?.appointmentUrl) {
+    contactParts.push(`Appointment page: ${path.appointmentUrl}`);
+  }
+  if (path?.recordsUrl) {
+    contactParts.push(`Public-process page: ${path.recordsUrl}`);
+  }
+  if (pathStale) {
+    contactParts.push("Needs reverification before use");
   }
   contactParts.push(`Checked ${path?.checkedAt ?? CIVIC_DATA.checkedAt}`);
   elements.contactDetail.textContent = contactParts.join(" · ");
@@ -317,29 +345,38 @@ function renderDraft(state) {
     appendOfficialLink(elements.contactDetail, source, "Verify with");
   }
 
-  elements.openEmail.hidden = !draft.reviewed || !draft.recipientEmail;
-  if (draft.reviewed && draft.recipientEmail) {
-    elements.openEmail.href = `mailto:${draft.recipientEmail}?subject=${encodeURIComponent(draft.subject)}`;
-  } else {
-    elements.openEmail.removeAttribute("href");
-  }
+  const destinations = [
+    path?.email,
+    path?.phone,
+    path?.appointmentUrl,
+    path?.recordsUrl,
+  ].filter(Boolean);
+  const destinationLabel = destinations.length > 0
+    ? destinations.join("; ")
+    : path?.office ?? "the public process shown above";
+  const destinationWord = destinations.length === 1 ? "destination" : "destinations";
+  elements.draftReviewLabel.textContent = pathStale
+    ? "This destination needs reverification before the draft can be used."
+    : `I reviewed the ${destinationWord} (${destinationLabel}) and the wording.`;
 
-  elements.appointmentLink.hidden = !draft.reviewed || !path?.appointmentUrl;
-  if (draft.reviewed && path?.appointmentUrl) {
-    elements.appointmentLink.href = path.appointmentUrl;
-  } else {
-    elements.appointmentLink.removeAttribute("href");
-  }
+  elements.openEmail.hidden = !actionable || !draft.recipientEmail;
+  elements.appointmentLink.hidden = !actionable || !path?.appointmentUrl;
+  elements.phoneLink.hidden = !actionable || !path?.phone;
+  elements.recordsLink.hidden = !actionable || !path?.recordsUrl;
 }
 
 function renderAssistantStatus(state) {
   elements.assistantConsent.checked = state.consent;
-  if (!state.consent) {
+  elements.assistantConsent.disabled = !siteTools.isAvailable() && !state.consent;
+  if (!state.consent && !siteTools.isAvailable()) {
     elements.assistantStatus.textContent =
-      "Off. Your notes remain only in this page's memory.";
+      "Unavailable in this browser. The complete manual flow still works.";
+  } else if (!state.consent) {
+    elements.assistantStatus.textContent =
+      "Off. The assistant connected to this page cannot read or change this case.";
   } else if (siteTools.isRegistered()) {
     elements.assistantStatus.textContent =
-      "On. Four site tools are available to your assistant for this page session.";
+      "On. Your assistant can read this case and stage wording or a draft for your review. It cannot send.";
   } else if (!siteTools.isAvailable()) {
     elements.assistantStatus.textContent =
       "Sharing approved, but this browser does not offer site tools. The manual flow still works.";
@@ -416,14 +453,22 @@ elements.prepareDraft.addEventListener("click", () => {
   store.prepareManualDraft().catch(showError);
 });
 
-elements.draftReviewed.addEventListener("change", () => {
-  store.reviewDraft(elements.draftReviewed.checked).catch(showError);
+elements.draftReviewed.addEventListener("change", async () => {
+  try {
+    await store.reviewDraft(elements.draftReviewed.checked);
+  } catch (error) {
+    showError(error);
+    renderState(store.getSnapshot());
+  }
 });
 
 elements.copyDraft.addEventListener("click", async () => {
-  const draft = store.getSnapshot().draft;
-  if (!draft?.reviewed) {
-    showStatus("Review the recipient and wording before copying.");
+  let draft;
+  try {
+    draft = store.getActionableDraft();
+  } catch (error) {
+    showError(error);
+    renderState(store.getSnapshot());
     return;
   }
 
@@ -434,6 +479,45 @@ elements.copyDraft.addEventListener("click", async () => {
     showStatus("Copy was unavailable. Select the draft text and copy it manually.");
   }
 });
+
+function withActionablePath(action) {
+  try {
+    const draft = store.getActionableDraft();
+    const path = getPath(draft.pathId);
+    action({ draft, path });
+  } catch (error) {
+    showError(error);
+    renderState(store.getSnapshot());
+  }
+}
+
+elements.openEmail.addEventListener("click", () => {
+  withActionablePath(({ draft }) => {
+    window.location.href = `mailto:${draft.recipientEmail}?subject=${encodeURIComponent(draft.subject)}`;
+  });
+});
+
+elements.phoneLink.addEventListener("click", () => {
+  withActionablePath(({ path }) => {
+    window.location.href = `tel:${path.phone}`;
+  });
+});
+
+elements.appointmentLink.addEventListener("click", () => {
+  withActionablePath(({ path }) => {
+    window.open(path.appointmentUrl, "_blank", "noopener,noreferrer");
+  });
+});
+
+elements.recordsLink.addEventListener("click", () => {
+  withActionablePath(({ path }) => {
+    window.open(path.recordsUrl, "_blank", "noopener,noreferrer");
+  });
+});
+
+window.setInterval(() => {
+  renderState(store.getSnapshot());
+}, 60_000);
 
 elements.clearCase.addEventListener("click", async () => {
   siteTools.stop();
