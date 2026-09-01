@@ -1,4 +1,12 @@
-import { assertFreshPath, findPathsForNeed, getNeed } from "./civic-data.js";
+import {
+  CIVIC_DATA,
+  assertFreshPath,
+  findPathsForNeed,
+  getNeed,
+  getPath,
+  isPathStale,
+  projectFacts,
+} from "./civic-data.js";
 import { ERROR_CODES, NavigatorError } from "./errors.js";
 import { createHandoffDraft } from "./handoff.js";
 import {
@@ -183,7 +191,7 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
           next.assistantQuestions = [...next.pendingProposal.unresolvedQuestions];
           next.pendingProposal = null;
           next.draft = null;
-          next.notice = "Assistant wording accepted.";
+          next.notice = "Assistant wording and questions accepted.";
         });
       });
     },
@@ -202,11 +210,25 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
         if (!state.draft) {
           return snapshot();
         }
+        if (reviewed) {
+          assertFreshPath(state.draft.pathId, state.selectedNeedId, now());
+        }
         return commit((next) => {
           next.draft.reviewed = Boolean(reviewed);
           next.notice = reviewed ? "Draft marked as reviewed." : "Draft review removed.";
         });
       });
+    },
+
+    getActionableDraft() {
+      if (!state.draft?.reviewed) {
+        throw new NavigatorError(
+          ERROR_CODES.REVIEW_REQUIRED,
+          "Review the destination and wording before using this draft.",
+        );
+      }
+      assertFreshPath(state.draft.pathId, state.selectedNeedId, now());
+      return clone(state.draft);
     },
 
     prepareManualDraft() {
@@ -220,7 +242,12 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
             "Add the question you want help with before preparing a draft.",
           );
         }
-        const draft = createHandoffDraft({ statement, need, path });
+        const draft = createHandoffDraft({
+          statement,
+          need,
+          path,
+          townName: CIVIC_DATA.town.name,
+        });
         return commit((next) => {
           next.draft = { ...draft, createdBy: "resident" };
           next.notice = "Draft prepared for your review.";
@@ -235,22 +262,24 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
         case: {
           caseId: state.caseId,
           revision: state.revision,
-          townId: "vt:municipality:waterbury",
-          topic: "property_tax",
+          townId: CIVIC_DATA.town.id,
+          topic: CIVIC_DATA.topic,
           approvedStatement: state.statement,
           selectedNeedId: state.selectedNeedId,
           selectedPathId: state.selectedPathId,
           pendingProposal: state.pendingProposal
             ? {
-                proposedSummary: state.pendingProposal.proposedSummary,
-                unresolvedQuestions: [...state.pendingProposal.unresolvedQuestions],
+                awaitingResidentReview: true,
+                unresolvedQuestionCount: state.pendingProposal.unresolvedQuestions.length,
               }
             : null,
           draft: state.draft
             ? {
                 recipient: state.draft.recipient,
                 purpose: state.draft.purpose,
-                reviewed: state.draft.reviewed,
+                reviewed:
+                  state.draft.reviewed &&
+                  !isPathStale(getPath(state.draft.pathId), now()),
               }
             : null,
         },
@@ -269,6 +298,13 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
         ok: true,
         revision: state.revision,
         paths: findPathsForNeed(state.selectedNeedId, now()),
+        evidence: projectFacts().map((fact) => ({
+          id: fact.id,
+          statement: fact.statement,
+          limitation: fact.limitation,
+          sourceUrls: fact.sources.map((source) => source.url),
+        })),
+        canonicalUnknowns: [...CIVIC_DATA.unknowns],
       };
     },
 
@@ -285,6 +321,14 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
             "The case was cleared. Read the current state and try again.",
           );
         }
+        const statement = normalizeBoundedText(state.statement, MAX_STATEMENT_LENGTH);
+        if (!statement) {
+          throw new NavigatorError(
+            ERROR_CODES.NO_STATEMENT,
+            "The resident must add a question before the assistant can suggest wording.",
+          );
+        }
+        assertFreshPath(state.selectedPathId, state.selectedNeedId, now());
         throwIfCancelled(signal);
         return commit((next) => {
           next.pendingProposal = { proposedSummary, unresolvedQuestions };
@@ -319,7 +363,12 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
             "The resident must add a question before a draft can be prepared.",
           );
         }
-        const draft = createHandoffDraft({ statement, need, path });
+        const draft = createHandoffDraft({
+          statement,
+          need,
+          path,
+          townName: CIVIC_DATA.town.name,
+        });
         throwIfCancelled(signal);
         return commit((next) => {
           next.draft = { ...draft, createdBy: "assistant" };

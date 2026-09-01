@@ -19,8 +19,8 @@ advisory flow for this repository.
 - Local serving and production upload include only the explicit browser assets;
   repository metadata, tests, reviewed JSON, and documentation are not served.
 - CSP blocks all runtime connections with `connect-src 'none'`.
-- Source origins, recipients, phone numbers, appointment URLs, and source-to-path
-  mappings are exact build-time allowlists.
+- Source origins, recipients, phone numbers, appointment URLs, records URLs,
+  and source-to-path mappings are exact build-time allowlists.
 - Resident and assistant text is rendered only as text, never HTML.
 - Control and bidirectional-override characters are stripped from resident text
   and rejected in assistant proposals.
@@ -28,8 +28,10 @@ advisory flow for this repository.
   abortable lifecycle. Registration, revocation, and mutation races are tested.
 - Every state-changing tool requires the current monotonic revision immediately
   before commit. The revision prevents stale writes; it is not authentication.
-- Human controls alone can copy, open an allowlisted email draft, or leave the
-  site. The resident's draft body is never included in a URL.
+- Human command buttons contain no dormant destination URL. On each activation,
+  they recheck review state and source freshness before opening an allowlisted
+  email, phone, appointment, or records route. The resident's draft body is
+  never included in a URL.
 
 ## Stop conditions
 

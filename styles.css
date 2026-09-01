@@ -30,6 +30,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   background: var(--mist);
   scroll-behavior: smooth;
@@ -87,6 +91,21 @@ a {
 
 a:hover {
   color: var(--pine-deep);
+}
+
+.skip-link {
+  background: var(--surface);
+  border: 2px solid var(--focus);
+  left: 1rem;
+  padding: 0.65rem 0.85rem;
+  position: fixed;
+  top: 1rem;
+  transform: translateY(-180%);
+  z-index: 100;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 :focus-visible {
@@ -212,6 +231,13 @@ nav {
   font-size: 1.1rem;
   margin: 1rem 0 0;
   max-width: 720px;
+}
+
+.scope-note {
+  color: var(--pine-deep);
+  font-size: 0.82rem;
+  font-weight: 750;
+  margin: 0.8rem 0 0;
 }
 
 .independence-note {
@@ -414,6 +440,13 @@ textarea:focus {
   margin: 0.35rem 0;
 }
 
+.proposal-question-label {
+  color: var(--lake-deep);
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-top: 0.8rem !important;
+}
+
 .sharing-row {
   align-items: center;
   background: var(--mist);
@@ -441,6 +474,10 @@ textarea:focus {
 
 .sharing-detail {
   padding: 0 0.9rem;
+}
+
+.next-step-link {
+  margin-top: 1.25rem;
 }
 
 .switch-label,
@@ -714,6 +751,11 @@ input[type="radio"] {
 
 .assistant-question {
   color: var(--lake-deep);
+  font-weight: 700;
+}
+
+.draft-ready-link {
+  margin-left: 0.65rem;
 }
 
 .choice-group {
@@ -834,7 +876,15 @@ input[type="radio"] {
 }
 
 .review-check {
+  display: flex;
   margin: 1rem 0;
+  width: 100%;
+}
+
+.review-check span,
+.contact-detail {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .button-row {
@@ -869,6 +919,7 @@ input[type="radio"] {
 
 .command-link {
   align-items: center;
+  background: transparent;
   border: 1px solid var(--pine);
   border-radius: 6px;
   color: var(--pine);
@@ -1022,6 +1073,25 @@ footer p {
     gap: 1.25rem;
   }
 
+  .step-nav {
+    overflow-x: visible;
+  }
+
+  .step-nav ol {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-width: 0;
+  }
+
+  .step-nav a {
+    flex-direction: column;
+    font-size: 0.76rem;
+    gap: 0.25rem;
+    line-height: 1.15;
+    min-height: 66px;
+    padding: 0.45rem 0.2rem;
+    text-align: center;
+  }
+
   h1 {
     font-size: 2.25rem;
   }
@@ -1050,7 +1120,13 @@ footer p {
   }
 
   .sharing-detail {
+    font-size: 0.82rem;
     padding: 0;
+  }
+
+  #assistant-status,
+  .field-meta {
+    font-size: 0.8rem;
   }
 
   .field-meta {
@@ -1078,8 +1154,10 @@ footer p {
 
   .button-row > *,
   #prepare-draft,
+  .draft-ready-link,
   .danger-button {
     justify-content: center;
+    margin-left: 0;
     width: 100%;
   }
 }

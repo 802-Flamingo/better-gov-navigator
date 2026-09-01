@@ -68,7 +68,7 @@ export const SOURCE_PACK = {
   ],
   unknowns: [
     "Whether the property's assessed value changed.",
-    "Whether the property was classified as homestead or nonhomestead for 2026.",
+    "Whether all or part of the property used the homestead or nonhomestead rate for 2026.",
     "Whether a credit, exemption, state adjustment, penalty, or local agreement changed the net bill.",
     "Which specific line or amount on the resident's bill prompted the question.",
   ],
@@ -144,7 +144,7 @@ export const SOURCE_PACK = {
       staleAfter: "2026-09-30",
       sourceId: "vermont-homestead-declaration-2026",
       limitation:
-        "Navigator cannot determine eligibility, credit amount, filing status, or whether a declaration was accepted.",
+        "Navigator cannot determine eligibility, credit amount, filing status, or whether a declaration was accepted. Vermont lists October 15, 2026 as the final date it will accept a 2026 declaration or credit claim; verify current timing with the Department.",
     },
     {
       id: "waterbury-budget-records",
@@ -155,6 +155,7 @@ export const SOURCE_PACK = {
         "Please point me to the adopted municipal budget record and the appropriate public process for a budget question.",
       salutation: "Waterbury Selectboard public comment:",
       contactMode: "records_and_meeting",
+      recordsUrl: "https://www.waterburyvt.com/boards/selectboard",
       checkedAt: "2026-08-31",
       staleAfter: "2026-09-30",
       sourceId: "waterbury-selectboard-2026",

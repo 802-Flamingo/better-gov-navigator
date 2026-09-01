@@ -28,6 +28,7 @@ const allowedDestinations = new Map([
       email: "knealy@waterburyvt.com",
       phone: "802-244-5858",
       appointmentUrl: null,
+      recordsUrl: null,
       sourceId: "waterbury-property-taxes",
     },
   ],
@@ -37,6 +38,7 @@ const allowedDestinations = new Map([
       email: "dsweet@waterburyvt.com",
       phone: "802-244-1013",
       appointmentUrl: null,
+      recordsUrl: null,
       sourceId: "waterbury-property-reappraisal",
     },
   ],
@@ -46,6 +48,7 @@ const allowedDestinations = new Map([
       email: null,
       phone: "802-828-2865",
       appointmentUrl: "https://tax.vermont.gov/schedule-appointment",
+      recordsUrl: null,
       sourceId: "vermont-homestead-declaration-2026",
     },
   ],
@@ -55,6 +58,7 @@ const allowedDestinations = new Map([
       email: null,
       phone: null,
       appointmentUrl: null,
+      recordsUrl: "https://www.waterburyvt.com/boards/selectboard",
       sourceId: "waterbury-selectboard-2026",
     },
   ],
@@ -100,6 +104,11 @@ for (const path of SOURCE_PACK.paths) {
     path.appointmentUrl ?? null,
     expected.appointmentUrl,
     `${path.id} appointment URL changed`,
+  );
+  assert.equal(
+    path.recordsUrl ?? null,
+    expected.recordsUrl,
+    `${path.id} records URL changed`,
   );
   assert.equal(path.sourceId, expected.sourceId, `${path.id} source changed`);
 }

@@ -1,54 +1,78 @@
 # Demo Script
 
-Target: 2 minutes 35 seconds. Public YouTube video with clear audio.
+Target: 2 minutes 42 seconds. Public YouTube video with clear audio.
 
-## 0:00-0:20 — The resident problem
+## 0:00-0:12 - The resident problem
 
 Open the live URL. Say:
 
-> A higher property-tax bill creates a deceptively hard question. Public rates
-> are available, but those rates cannot explain an individual bill. Go Vermont
-> Civic Navigator makes that boundary useful instead of frustrating.
+> When a Waterbury tax bill jumps, public rates show what changed town-wide but
+> not why one resident's bill changed. Go Vermont turns that uncertainty into a
+> source-backed, human-approved next step without letting AI guess or send.
 
-Point out the independent-service notice and published 2026 rates.
+## 0:12-0:25 - Show the bounded scope
 
-## 0:20-1:05 — Complete manual experience
+Point out the independent-service notice, ten reviewed official sources, four
+accountable paths, and published 2026 rates. Say that conflicting or unsupported
+claims are withheld rather than averaged or guessed.
 
-Enter a synthetic question with no private identifiers. Review:
+## 0:25-0:42 - Enter a synthetic question
 
-- What public sources confirm.
-- What is still unclear.
-- One of the four plain-language needs.
-- The official starting point, limitation, publisher, and checked date.
+Enter: `My assessed value changed and I want to understand the record.` Do not
+use a real name, address, account number, or property record.
 
-Prepare a draft. Emphasize that it is not sent, the recipient and wording remain
-under resident control, and the message body never enters the email URL.
+## 0:42-0:58 - Evidence and honest unknowns
 
-## 1:05-2:15 — Human and assistant together
+Open one evidence disclosure. Show the exact finding, official links, and the
+yellow `What this does not tell you` boundary. Briefly show the four unknowns.
 
-Turn on sharing. Explain that this is page-session consent and that turning it
-off prevents future reads.
+## 0:58-1:14 - Resident chooses the path
 
-Ask the assistant to:
+Choose `Question an assessed value`, then select the Waterbury assessor path.
+Show the purpose, limitation, publisher, and checked date. The site recommends a
+reviewed place to start; it does not promise an appeal is available.
 
-1. Read the approved case with `get_handoff_state`.
-2. Read the reviewed path with `find_civic_paths`.
-3. Optionally stage clearer wording with `propose_case_update`.
-4. Prepare the deterministic draft with `prepare_handoff`.
+## 1:14-1:25 - Consent is visible and optional
 
-Show that the proposed wording awaits resident acceptance and the prepared draft
-still awaits recipient-and-wording review.
+Turn on assistant sharing. Say that no tools existed before consent and that
+turning sharing off prevents future reads and state changes.
 
-## 2:15-2:35 — Why WebMCP
+## 1:25-1:50 - Let the assistant help where it is actually better
+
+Ask the assistant to read the approved case and the evidence-grounded path,
+including the reviewed claims and canonical unknowns, then stage clearer wording
+with two unanswered questions. Show the proposal appearing on the page while the
+resident's original wording remains unchanged. Accept it.
+
+## 1:50-2:09 - Stage the bounded handoff
+
+Ask the assistant to prepare the handoff. Show the deterministic destination,
+purpose, generic subject, and draft body.
+
+## 2:09-2:32 - Prove the human gate
+
+Show the unchecked review control. Copy and external contact actions remain
+unavailable. Read the exact destination, check the review statement, and show
+that only the route appropriate to this path appears. Do not click it.
+
+## 2:32-2:42 - Close on the product idea
 
 Say:
 
-> WebMCP lets the website expose exactly the civic actions it can support,
-> instead of asking an assistant to infer facts, scrape the interface, or choose
-> a recipient. The resident gets useful collaboration without surrendering the
-> final decision or contact action.
+> WebMCP gives the assistant a bounded civic contract instead of a page to
+> guess from. Official facts stay fixed, uncertainty stays visible, and the
+> resident keeps every consequential decision.
 
-End on the source-backed draft and product name, not infrastructure.
+End on the reviewed draft and product name.
+
+## What not to spend demo time on
+
+- Terminals, test output, schemas, or deployment infrastructure.
+- The direct fallback URL.
+- All four civic routes.
+- A tax calculation or diagnosis.
+- Ending by revoking consent, because that intentionally removes the staged
+  assistant content and weakens the closing image.
 
 ## Recording controls
 

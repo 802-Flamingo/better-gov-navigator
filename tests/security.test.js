@@ -53,6 +53,33 @@ test("deployment policy forbids runtime connections and inline execution", async
   assert.equal(headers.get("X-Content-Type-Options"), "nosniff");
 });
 
+test("review-gated command links remain hidden despite component display styles", async () => {
+  const [html, css] = await Promise.all([
+    readFile(new URL("../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../styles.css", import.meta.url), "utf8"),
+  ]);
+  assert.match(html, /id="open-email"[^>]*hidden/);
+  assert.match(html, /id="appointment-link"[\s\S]*?hidden/);
+  assert.match(html, /id="phone-link"[^>]*hidden/);
+  assert.match(html, /id="records-link"[\s\S]*?hidden/);
+  for (const id of ["open-email", "appointment-link", "phone-link", "records-link"]) {
+    const tag = html.match(new RegExp(`<button[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
+    assert.ok(tag, `${id} must be a command button`);
+    assert.doesNotMatch(tag, /href=/);
+  }
+  assert.match(css, /\[hidden\]\s*\{\s*display:\s*none\s*!important;/);
+});
+
+test("assistant-suggested questions retain explicit resident-facing provenance", async () => {
+  const [html, app] = await Promise.all([
+    readFile(new URL("../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../src/app.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(html, /Questions this would add to "What is still unclear"/);
+  assert.match(html, /Use wording and questions/);
+  assert.match(app, /Assistant suggestion:/);
+});
+
 test("tool-facing modules contain no network, clipboard, navigation, or email capability", async () => {
   const paths = ["../src/webmcp.js", "../src/state.js", "../src/handoff.js"];
   const source = (

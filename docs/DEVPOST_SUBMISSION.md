@@ -6,39 +6,44 @@ Go Vermont Civic Navigator
 
 ## Tagline
 
-Source-backed civic answers that keep the resident in control.
+Official facts in. Accountable next steps out. No guessing in between.
 
 ## Short description
 
-Go Vermont Civic Navigator helps a Waterbury resident understand what official
-2026 property-tax records establish, what they cannot establish about an
-individual bill, and the shortest accountable next step. The complete workflow
-works manually. With explicit consent, WebMCP lets an assistant read the
-resident-approved case, find immutable civic paths, stage clearer wording, and
-prepare a deterministic draft without choosing facts, recipients, or actions.
+Go Vermont Civic Navigator turns a frustrating property-tax question into a
+bounded civic handoff. It shows a Waterbury resident what ten reviewed official
+sources establish, makes unsupported conclusions visibly unavailable, and maps
+four common needs to accountable starting points. The full workflow works
+manually. With explicit consent, WebMCP lets an assistant clarify the resident's
+question and stage a deterministic handoff without choosing official facts,
+destinations, or external actions.
 
 ## Why WebMCP fits
 
 Civic information is a high-consequence setting for ordinary browser
 automation. A visually plausible page can still be stale, ambiguous, or easy to
-misread. WebMCP gives this site a narrow contract: the assistant can use only the
-reviewed source pack and the path already chosen by the resident. It cannot
-browse for a more convenient answer, alter an official destination, calculate a
-tax, or contact anyone.
+misread. WebMCP gives this site a narrow contract: these site tools expose only
+the reviewed source pack and the path already chosen by the resident. The tools
+do not browse, alter an official destination, calculate tax, or contact anyone.
+An assistant may have unrelated capabilities from its host, but none are granted
+by this application.
 
 ## Better human experience
 
 The resident sees the same five-step experience with or without an assistant.
 Assistant collaboration is additive and reversible: sharing is off by default,
-proposed wording requires acceptance, drafts require explicit recipient and
-wording review, and only human controls can copy or leave the page.
+zero site tools exist before consent, proposed wording requires acceptance,
+drafts require explicit destination-and-wording review, and only human controls
+can copy or leave the page.
 
 ## What people and agents can do together
 
 The resident supplies context and makes every consequential choice. The
-assistant can structure that approved context, retrieve the bounded civic path,
-surface unanswered questions, and stage a draft. The website remains the source
-of truth for facts, sources, limitations, and recipients.
+assistant can structure that approved context, retrieve the bounded civic path
+with its reviewed claims, source URLs, limitations, and canonical unknowns,
+then surface unanswered questions and stage a draft. The website remains the
+bounded control point for the reviewed official-source snapshot and
+destinations.
 
 ## Implementation
 
@@ -47,7 +52,10 @@ ES modules, reviewed JSON, and Node's built-in test runner. Four imperative
 WebMCP tools use strict schemas and equivalent runtime validation. All mutations
 run through a serialized queue with monotonic revision checks. The deployment
 has no runtime API, analytics, persistence, third-party script, or network
-permission; CSP sets `connect-src 'none'`.
+permission; CSP sets `connect-src 'none'`. The consent, revision, evidence, and
+handoff controls can be reused after another town's source pack and visible civic
+copy pass the same validation; the replication process is published with the
+source code.
 
 ## Links to fill at release
 
@@ -55,7 +63,7 @@ permission; CSP sets `connect-src 'none'`.
 - Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `c443a0a87084a0278602bef02dbd69202de69801`
+- Production commit: `Pending final release verification`
 
 ## Technologies
 

@@ -82,7 +82,10 @@ replay, cancellation, and partial WebMCP registration failure.
 
 See [SOURCES.md](SOURCES.md), [SECURITY.md](SECURITY.md),
 [docs/WEBMCP.md](docs/WEBMCP.md), and
-[docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full contracts.
+[docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full contracts. The
+[replication blueprint](docs/REPLICATION_BLUEPRINT.md) explains how the bounded
+method can expand to another municipality without claiming that coverage exists
+today.
 
 ## License
 
