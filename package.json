@@ -5,8 +5,10 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
+    "build": "npm run generate && npm run validate && node scripts/build-static.mjs",
     "check": "npm run validate && npm test",
     "dev": "node scripts/serve.mjs",
+    "generate": "node scripts/generate-public-assets.mjs",
     "test": "node --test",
     "test:security": "node --test tests/security.test.js",
     "validate": "node scripts/validate-source-pack.mjs"

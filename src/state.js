@@ -6,6 +6,7 @@ import {
   getPath,
   isPathStale,
   projectFacts,
+  projectCivicRecordMetadata,
 } from "./civic-data.js";
 import { ERROR_CODES, NavigatorError } from "./errors.js";
 import { createHandoffDraft } from "./handoff.js";
@@ -259,6 +260,7 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
       assertConsent();
       return {
         ok: true,
+        record: projectCivicRecordMetadata(),
         case: {
           caseId: state.caseId,
           revision: state.revision,
@@ -296,13 +298,18 @@ export function createNavigatorStore({ now = () => new Date() } = {}) {
       }
       return {
         ok: true,
+        record: projectCivicRecordMetadata(),
         revision: state.revision,
         paths: findPathsForNeed(state.selectedNeedId, now()),
         evidence: projectFacts().map((fact) => ({
           id: fact.id,
+          recordUrl: fact.recordUrl,
           statement: fact.statement,
           limitation: fact.limitation,
-          sourceUrls: fact.sources.map((source) => source.url),
+          sourceUrls: fact.sources.map((source) => source.url).filter(Boolean),
+          withheldSourceIds: fact.sources
+            .filter((source) => !source.url)
+            .map((source) => source.id),
         })),
         canonicalUnknowns: [...CIVIC_DATA.unknowns],
       };

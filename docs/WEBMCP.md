@@ -23,7 +23,8 @@ prevents future access but cannot retract information already returned.
 - Input: exact empty object.
 - Read only: yes.
 - Returns: resident-approved statement, town/topic IDs, selected need and path,
-  revision, and minimal staged-state summaries.
+  revision, minimal staged-state summaries, and the canonical `CivicRecordV1`
+  identity for citation and provenance.
 
 ### `find_civic_paths`
 
@@ -31,8 +32,24 @@ prevents future access but cannot retract information already returned.
 - Read only: yes.
 - Returns: immutable reviewed paths for the need already chosen by the resident,
   with source, limitation, checked date, and stale status; also returns the three
-  reviewed civic claims, their limitations and source URLs, and the canonical
-  unknowns that must bound any assistant proposal.
+  reviewed civic claims, their limitations, linked source URLs, withheld bulk
+  source IDs, and the canonical unknowns that must bound any assistant proposal.
+  Every path and claim includes its permanent, no-JavaScript resident-readable
+  record URL.
+
+## Open-web record
+
+`civic-record.json` is a public, passive projection of the same frozen source
+pack. It contains reviewed claims, limitations, canonical unknowns, source
+references, lifecycle states, and integrity metadata. It excludes resident case
+text and direct contact destinations. The WebMCP read tools identify this record
+instead of creating a competing assistant-only version of civic truth.
+`civic-record.schema.json` publishes the strict project-local contract; it is
+not represented as a government or cross-industry standard.
+
+The citation pages expose findings, limitations, freshness, and official-source
+references without loading case state. Following a citation therefore cannot
+select a need, alter a revision, clear a draft, or grant assistant consent.
 
 ### `prepare_handoff`
 

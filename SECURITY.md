@@ -16,8 +16,16 @@ advisory flow for this repository.
 
 - No third-party scripts, external fonts, package dependencies, service worker,
   analytics, persistence, runtime API, or network-capable WebMCP tool.
-- Local serving and production upload include only the explicit browser assets;
-  repository metadata, tests, reviewed JSON, and documentation are not served.
+- Local serving and production upload include only explicit browser and passive
+  discovery assets. The Vercel build copies one shared exact allowlist into its
+  output directory; repository metadata, tests, the private reviewed source-pack
+  JSON, build scripts, and documentation are not served.
+- The public `CivicRecordV1`, assistant text, feed, sitemap, and crawler rules
+  are generated from the reviewed source pack and parity-tested. They contain no
+  resident case state or direct contact destinations.
+- URLs for bulk issued-bill documents containing owner information are removed
+  by a deterministic sanitizer before the browser data module or any other
+  production asset is built. Stable source IDs and evidence hashes remain.
 - CSP blocks all runtime connections with `connect-src 'none'`.
 - Source origins, recipients, phone numbers, appointment URLs, records URLs,
   and source-to-path mappings are exact build-time allowlists.

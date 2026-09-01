@@ -45,6 +45,14 @@ then surface unanswered questions and stage a draft. The website remains the
 bounded control point for the reviewed official-source snapshot and
 destinations.
 
+The reviewed snapshot is also published as a durable `CivicRecordV1`: each
+claim and path has a permanent URL, the lifecycle and unresolved questions are
+explicit, and assistant-readable discovery files are generated from the same
+source pack. This makes the civic evidence inspectable and reusable without
+exposing a resident's case or contact destinations. Seven no-JavaScript record
+pages make every claim and path independently readable and indexable; a strict
+project-local JSON Schema makes the machine contract validatable.
+
 ## Implementation
 
 The project is a dependency-free static application using semantic HTML, CSS,
@@ -55,7 +63,10 @@ has no runtime API, analytics, persistence, third-party script, or network
 permission; CSP sets `connect-src 'none'`. The consent, revision, evidence, and
 handoff controls can be reused after another town's source pack and visible civic
 copy pass the same validation; the replication process is published with the
-source code.
+source code. The public civic record, assistant text, Atom feed, sitemap, and
+crawler rules are deterministic build products whose parity is test-gated.
+Production is assembled from one exact asset allowlist rather than a root-file
+denylist.
 
 ## Links to fill at release
 

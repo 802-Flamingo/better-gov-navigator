@@ -1,5 +1,10 @@
 import { SOURCE_PACK } from "../data/waterbury-tax-2026.js";
 import { ERROR_CODES, NavigatorError } from "./errors.js";
+import {
+  claimRecordUrl,
+  makeCivicRecordMetadata,
+  pathRecordUrl,
+} from "./record-contract.js";
 
 function deepFreeze(value) {
   if (value && typeof value === "object" && !Object.isFrozen(value)) {
@@ -12,6 +17,10 @@ function deepFreeze(value) {
 }
 
 export const CIVIC_DATA = deepFreeze(structuredClone(SOURCE_PACK));
+
+export function projectCivicRecordMetadata() {
+  return makeCivicRecordMetadata(CIVIC_DATA);
+}
 
 export function getNeed(needId) {
   return CIVIC_DATA.needs.find((need) => need.id === needId) ?? null;
@@ -75,6 +84,7 @@ export function findPathsForNeed(needId, now = new Date()) {
 
     return {
       id: path.id,
+      recordUrl: pathRecordUrl(path.id),
       label: path.label,
       office: path.office,
       purpose: path.purpose,
@@ -115,15 +125,18 @@ export function assertFreshPath(pathId, needId, now = new Date()) {
 export function projectFacts() {
   return CIVIC_DATA.facts.map((fact) => ({
     id: fact.id,
+    recordUrl: claimRecordUrl(fact.id),
     statement: fact.statement,
     limitation: fact.limitation,
     checkedAt: fact.checkedAt,
     sources: fact.sourceIds.map((sourceId) => {
       const source = getSource(sourceId);
       return {
+        id: source?.id ?? sourceId,
         publisher: source?.publisher ?? "Official publisher",
         title: source?.title ?? "Official source",
-        url: source?.url ?? "",
+        url: source ? source.url : null,
+        access: source?.access ?? "unavailable",
       };
     }),
   }));

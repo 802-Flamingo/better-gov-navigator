@@ -18,6 +18,15 @@ summary, and SHA-256 of the exact captured excerpt. `npm run validate` also
 requires one of two official origins: `www.waterburyvt.com` or
 `tax.vermont.gov`.
 
+`npm run generate` derives a production-safe browser data module, the public
+`CivicRecordV1`, assistant-readable text, Atom feed, sitemap, and crawler
+instructions from this pack. Those projections retain claim limitations, source
+references, and evidence hashes while omitting captured excerpts that contain
+direct contact details. Validation rejects stale generated assets. A shared
+sanitizer removes direct URLs for bulk issued-bill documents containing
+property-owner information from every production projection; their source IDs,
+summaries, locators, and captured-evidence hashes remain available for audit.
+
 ## Official sources
 
 1. [Waterbury 2026 Tax Rates](https://www.waterburyvt.com/departments/taxes/rates)
@@ -58,7 +67,8 @@ requires one of two official origins: `www.waterburyvt.com` or
 1. Re-open every canonical source and independently verify every published
    number, recipient, date, and limitation.
 2. Replace each short captured excerpt and recompute its SHA-256.
-3. Update both source-pack files identically.
+3. Update the reviewed JSON source pack, then run `npm run generate` to rebuild
+   its sanitized browser projection and the open-web assets.
 4. Update contact `checkedAt` and `staleAfter`; never extend freshness without a
    real recheck.
 5. Run `npm run check` and repeat the real browser canary.

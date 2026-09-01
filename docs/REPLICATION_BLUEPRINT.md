@@ -25,7 +25,10 @@ product.
    checked date, and 30-day contact expiry.
 5. Add the source pack to deterministic validation and test every need, stale
    state, handoff, and allowlisted destination.
-6. Run the full security and browser matrix, then have an independent reviewer
+6. Generate the public civic record, validation schema, human-readable record
+   pages, assistant text, snapshot feed, and sitemap; verify that they contain no
+   resident state, direct contact destinations, or bulk owner-record links.
+7. Run the full security and browser matrix, then have an independent reviewer
    compare every public sentence and destination with the captured evidence.
 
 ## Publication gate
@@ -41,7 +44,8 @@ Expansion is source-pack work, not a looser AI prompt. The software contract
 remains fixed while reviewed municipal packs are added one at a time. This keeps
 the marginal infrastructure cost near zero and makes quality measurable by town:
 source coverage, unresolved conflicts, destination freshness, and complete
-evidence mapping.
+evidence mapping. Permanent record IDs also make changes comparable over time
+without pretending that an old snapshot is current.
 
 This blueprint is an implementation path, not evidence that another town has
 already passed the gate.

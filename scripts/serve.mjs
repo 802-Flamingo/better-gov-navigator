@@ -15,6 +15,8 @@ const contentTypes = {
   ".json": "application/json; charset=utf-8",
   ".md": "text/markdown; charset=utf-8",
   ".svg": "image/svg+xml",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
 };
 
 const securityHeaders = {
@@ -47,7 +49,10 @@ createServer(async (req, res) => {
     return;
   }
 
-  const relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
+  let relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
+  if (relativePath.endsWith("/")) {
+    relativePath += "index.html";
+  }
   if (!isPublicAsset(relativePath)) {
     send(res, 404, "Not found");
     return;
@@ -67,7 +72,9 @@ createServer(async (req, res) => {
     res.writeHead(200, {
       ...securityHeaders,
       "Content-Length": info.size,
-      "Content-Type": contentTypes[extname(filePath)] ?? "application/octet-stream",
+      "Content-Type": relativePath === "feed.xml"
+        ? "application/atom+xml; charset=utf-8"
+        : contentTypes[extname(filePath)] ?? "application/octet-stream",
     });
     if (req.method === "HEAD") {
       res.end();

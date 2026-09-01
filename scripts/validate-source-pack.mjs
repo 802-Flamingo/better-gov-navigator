@@ -1,13 +1,23 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { SOURCE_PACK } from "../data/waterbury-tax-2026.js";
+import { SOURCE_PACK as BROWSER_SOURCE_PACK } from "../data/waterbury-tax-2026.js";
+import { buildPublicAssets } from "./civic-record-assets.mjs";
+import {
+  REVIEWED_SOURCE_PACK as SOURCE_PACK,
+  buildBrowserSourcePack,
+} from "./source-pack.mjs";
 
 const jsonPack = JSON.parse(
   await readFile(new URL("../data/waterbury-tax-2026.json", import.meta.url), "utf8"),
 );
 
-assert.deepEqual(SOURCE_PACK, jsonPack, "Browser module must match reviewed JSON exactly");
+assert.deepEqual(SOURCE_PACK, jsonPack, "Reviewed source loader must match reviewed JSON");
+assert.deepEqual(
+  BROWSER_SOURCE_PACK,
+  buildBrowserSourcePack(SOURCE_PACK),
+  "Browser module must match the sanitized production projection",
+);
 assert.equal(SOURCE_PACK.schemaVersion, 1);
 assert.equal(SOURCE_PACK.town.id, "vt:municipality:waterbury");
 assert.equal(SOURCE_PACK.topic, "property_tax");
@@ -128,6 +138,11 @@ for (const fact of SOURCE_PACK.facts) {
   }
 }
 
+for (const [relativePath, expected] of buildPublicAssets()) {
+  const actual = await readFile(new URL(`../${relativePath}`, import.meta.url), "utf8");
+  assert.equal(actual, expected, `${relativePath} is stale; run npm run generate`);
+}
+
 console.log(
-  `Validated ${SOURCE_PACK.facts.length} facts, ${SOURCE_PACK.paths.length} paths, and ${SOURCE_PACK.sources.length} official sources.`,
+  `Validated ${SOURCE_PACK.facts.length} facts, ${SOURCE_PACK.paths.length} paths, ${SOURCE_PACK.sources.length} official sources, and ${buildPublicAssets().size} public discovery assets.`,
 );

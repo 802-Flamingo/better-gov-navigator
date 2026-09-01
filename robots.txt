@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://navigator.govermont.co/sitemap.xml

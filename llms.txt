@@ -1,0 +1,16 @@
+# Go Vermont Civic Navigator
+
+> An independent, source-backed Waterbury property-tax workflow that separates reviewed public facts from the questions an individual bill still requires.
+
+Go Vermont Civic Navigator is published by 802 Flamingo LLC. It is not a municipal or State of Vermont website, and no government endorsement is implied.
+
+Use boundaries: cite the civic record and linked official sources, preserve every limitation and canonical unknown, do not infer an individual diagnosis, and reverify time-bounded contact details in the interactive workflow. Go Vermont does not calculate tax, determine eligibility, store a case, send email, or act for the resident.
+
+## Canonical resources
+
+- [Resident workflow](https://navigator.govermont.co/): Complete manual and WebMCP-capable experience.
+- [CivicRecordV1 JSON](https://navigator.govermont.co/civic-record.json): Machine-readable claims, limitations, source references, lifecycle, and integrity metadata.
+- [CivicRecordV1 schema](https://navigator.govermont.co/civic-record.schema.json): Project-local JSON Schema for validation and compatibility.
+- [Full assistant-readable record](https://navigator.govermont.co/llms-full.txt): Plain-text rendering of the reviewed record.
+- [Reviewed snapshot feed](https://navigator.govermont.co/feed.xml): Atom feed for reviewed civic snapshots.
+- [Public source code](https://github.com/802-Flamingo/better-gov-navigator): Reproducible application, tests, source documentation, and security boundaries.

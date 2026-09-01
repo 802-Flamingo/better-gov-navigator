@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>https://navigator.govermont.co/feed.xml</id>
+  <title>Go Vermont reviewed civic snapshots</title>
+  <updated>2026-08-31T00:00:00Z</updated>
+  <link rel="self" type="application/atom+xml" href="https://navigator.govermont.co/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://navigator.govermont.co/"/>
+  <author><name>802 Flamingo LLC</name></author>
+  <subtitle>Source checks are recorded as dates. Atom requires a timestamp, so each checked date is normalized to 00:00:00 UTC; it is not a claimed review time.</subtitle>
+  <entry>
+    <id>urn:govermont:civic-record:vt:municipality:waterbury:property-tax:2026</id>
+    <title>Waterbury 2026 property-tax civic snapshot</title>
+    <updated>2026-08-31T00:00:00Z</updated>
+    <link rel="alternate" type="text/html" href="https://navigator.govermont.co/#public-records"/>
+    <link rel="related" type="application/json" href="https://navigator.govermont.co/civic-record.json"/>
+    <summary>Reviewed official claims, explicit limitations, canonical unknowns, and accountable starting paths for Waterbury property-tax questions.</summary>
+  </entry>
+</feed>
