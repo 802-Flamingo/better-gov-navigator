@@ -74,8 +74,8 @@ denylist.
 - Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `2169ace9775063ca1ba2ef135605846194f4c627`
-- Production deployment: `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`
+- Production commit: `89fcb28a85477ac65a8b01a6b7acf965adf7e672`
+- Production deployment: `dpl_5tvpkqKfiTeNcYT3AyZet5W9SqFv`
 
 ## Technologies
 
