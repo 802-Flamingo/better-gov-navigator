@@ -22,7 +22,7 @@
 
 ## Security and browser
 
-- [x] `npm run check` passes all 52 tests with zero package dependencies.
+- [x] `npm run check` passes all 62 tests with zero package dependencies.
 - [x] Registration, revocation, duplicate, replay, cancellation, and partial
   failure tests pass.
 - [x] Resident body is absent from the email URL.
@@ -33,7 +33,8 @@
   publishers, and live status announcements are present.
 - [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
 - [x] Production path reads return reviewed claims, limitations, exact source
-  URLs, and canonical unknowns instead of an ungrounded path label alone.
+  URLs, withheld bulk-source IDs, stable citation URLs, and canonical unknowns
+  instead of an ungrounded path label alone.
 - [x] Production proposal acceptance preserves assistant-question provenance;
   exact destination controls remain locked until resident review.
 - [x] Chrome 152 registration and revocation canary with WebMCP testing enabled:
@@ -43,8 +44,13 @@
   connector validates the real registration lifecycle but does not expose
   Chrome's tool-execution hook.
 - [x] Production CSP and all security headers verified from the network edge.
-- [x] Anonymous clean-checkout tests pass on public `main` and the exact
-  production SHA recorded by Vercel.
+- [x] Anonymous clean-checkout tests pass on public `main`; all production bytes
+  match the recorded merge commit's build.
+- [x] Seven no-JavaScript claim/path citations, `CivicRecordV1`, its strict
+  schema, the Atom feed, assistant indexes, sitemap, and crawler rules return
+  from production and byte-match the reviewed build.
+- [x] The 26-file production allowlist contains zero bulk property-bill URL
+  matches; the full reviewed JSON and build scripts return 404.
 
 ## Deployment
 
@@ -57,8 +63,11 @@
 - [x] Deploy reviewed design PR #1 and high-zoom evidence correction PR #2.
 - [x] Deploy competition hardening PR #4 and record deployment
   `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`.
-- [x] Verify exact production SHA
-  `2169ace9775063ca1ba2ef135605846194f4c627`.
+- [x] Merge civic-record PR #6 through the normal reviewed path and promote its
+  byte-verified preview without an admin bypass.
+- [x] Record production deployment `dpl_5tvpkqKfiTeNcYT3AyZet5W9SqFv`.
+- [x] Verify all 26 production responses against merge commit
+  `89fcb28a85477ac65a8b01a6b7acf965adf7e672`.
 
 ## Submission
 
