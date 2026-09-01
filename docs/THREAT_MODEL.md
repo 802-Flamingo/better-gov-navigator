@@ -21,6 +21,10 @@
 - Accidental inclusion of resident text in a request, URL, analytics event, or
   email link.
 - Repository secret leakage or dependency supply-chain compromise.
+- A stale or altered public record, assistant index, feed, or sitemap diverging
+  from the reviewed source pack.
+- Resident case text or direct contact destinations leaking into open-web
+  discovery files.
 - A government-affiliation inference caused by branding or source presentation.
 
 ## Controls
@@ -31,6 +35,13 @@
   `unsafe-inline`, and no `unsafe-eval`.
 - Exact official-origin and civic-destination allowlists at validation time.
 - Deep-frozen source pack and deterministic projections.
+- Generated open-web assets with byte-for-byte parity tests; the public
+  `CivicRecordV1` omits resident state and direct contact destinations.
+- No-JavaScript claim and path pages, a strict project-local schema, and one
+  exact shared local/production asset allowlist.
+- A shared deterministic sanitizer removes bulk issued-bill URLs containing
+  owner information before the browser module and all public assets are built;
+  tests reject those URLs anywhere in the exact production output.
 - `textContent` rendering; no dynamic HTML.
 - Bounded narrative fields; dangerous display-control characters removed from
   resident input and rejected in assistant proposals.
@@ -49,6 +60,8 @@
 
 - Official sources can change after capture; the excerpt hash proves repository
   integrity, not current source equivalence.
+- Permanent record URLs identify this reviewed snapshot; they do not make the
+  underlying official page current after its checked date.
 - A resident can still enter information they were warned not to enter.
 - Information already returned to an assistant cannot be retracted from that
   provider by browser consent revocation.

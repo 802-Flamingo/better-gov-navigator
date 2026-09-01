@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createNavigatorStore } from "../src/state.js";
-import { isPublicAsset } from "../scripts/public-paths.mjs";
+import { PUBLIC_ASSET_PATHS, isPublicAsset } from "../scripts/public-paths.mjs";
 
 test("project has no package dependencies", async () => {
   const packageJson = JSON.parse(
@@ -16,11 +16,19 @@ test("project has no package dependencies", async () => {
 
 test("only explicit application assets are locally servable", () => {
   for (const path of [
+    "civic-record.json",
+    "favicon.svg",
+    "feed.xml",
     "index.html",
+    "llms-full.txt",
+    "llms.txt",
+    "robots.txt",
+    "sitemap.xml",
     "styles.css",
     "src/app.js",
     "src/webmcp.js",
     "data/waterbury-tax-2026.js",
+    "records/waterbury-2026-rates/index.html",
   ]) {
     assert.equal(isPublicAsset(path), true, `${path} should be public`);
   }
@@ -32,9 +40,21 @@ test("only explicit application assets are locally servable", () => {
     "README.md",
     "data/waterbury-tax-2026.json",
     "tests/security.test.js",
+    "src/future-unreviewed-module.js",
   ]) {
     assert.equal(isPublicAsset(path), false, `${path} must remain private`);
   }
+});
+
+test("the production build uses the same exact public-asset allowlist", async () => {
+  const config = JSON.parse(
+    await readFile(new URL("../vercel.json", import.meta.url), "utf8"),
+  );
+  assert.equal(config.buildCommand, "npm run build");
+  assert.equal(config.outputDirectory, "dist");
+  assert.match(config.installCommand, /No dependencies to install/);
+  assert.equal(PUBLIC_ASSET_PATHS.length, new Set(PUBLIC_ASSET_PATHS).size);
+  assert.equal(PUBLIC_ASSET_PATHS.every((path) => isPublicAsset(path)), true);
 });
 
 test("deployment policy forbids runtime connections and inline execution", async () => {
@@ -42,7 +62,8 @@ test("deployment policy forbids runtime connections and inline execution", async
     await readFile(new URL("../vercel.json", import.meta.url), "utf8"),
   );
   const headers = new Map(
-    config.headers[0].headers.map(({ key, value }) => [key, value]),
+    config.headers.find(({ source }) => source === "/(.*)").headers
+      .map(({ key, value }) => [key, value]),
   );
   const csp = headers.get("Content-Security-Policy");
   assert.match(csp, /connect-src 'none'/);
@@ -51,6 +72,31 @@ test("deployment policy forbids runtime connections and inline execution", async
   assert.doesNotMatch(csp, /unsafe-inline|unsafe-eval/);
   assert.equal(headers.get("Referrer-Policy"), "no-referrer");
   assert.equal(headers.get("X-Content-Type-Options"), "nosniff");
+  const feedHeaders = new Map(
+    config.headers.find(({ source }) => source === "/feed.xml").headers
+      .map(({ key, value }) => [key, value]),
+  );
+  assert.equal(feedHeaders.get("Content-Type"), "application/atom+xml; charset=utf-8");
+});
+
+test("public discovery assets remain passive data", async () => {
+  const source = (
+    await Promise.all(
+      [
+        "../civic-record.json",
+        "../civic-record.schema.json",
+        "../favicon.svg",
+        "../feed.xml",
+        "../llms-full.txt",
+        "../llms.txt",
+        "../robots.txt",
+        "../sitemap.xml",
+      ].map((path) => readFile(new URL(path, import.meta.url), "utf8")),
+    )
+  ).join("\n");
+
+  assert.doesNotMatch(source, /<script|javascript:|data:text\/html|onerror\s*=|onload\s*=/i);
+  assert.doesNotMatch(source, /ANTHROPIC_API_KEY|SUPABASE|VERCEL_TOKEN|residentStatement/);
 });
 
 test("review-gated command links remain hidden despite component display styles", async () => {

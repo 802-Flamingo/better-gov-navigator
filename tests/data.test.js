@@ -9,12 +9,27 @@ import {
   ratesAreHistorical,
 } from "../src/civic-data.js";
 import { SOURCE_PACK } from "../data/waterbury-tax-2026.js";
+import {
+  MACHINE_WITHHELD_SOURCE_IDS,
+  buildBrowserSourcePack,
+  buildBrowserSourceModule,
+} from "../scripts/source-pack.mjs";
 
-test("reviewed JSON and browser source pack are identical", async () => {
+test("browser source pack is a deterministic privacy projection", async () => {
   const json = JSON.parse(
     await readFile(new URL("../data/waterbury-tax-2026.json", import.meta.url), "utf8"),
   );
-  assert.deepEqual(SOURCE_PACK, json);
+  assert.deepEqual(SOURCE_PACK, buildBrowserSourcePack(json));
+  assert.equal(MACHINE_WITHHELD_SOURCE_IDS.size, 2);
+
+  for (const sourceId of MACHINE_WITHHELD_SOURCE_IDS) {
+    const source = SOURCE_PACK.sources.find((candidate) => candidate.id === sourceId);
+    assert.equal(source.url, null);
+    assert.equal(source.access, "url_withheld_from_production");
+  }
+
+  const browserModule = buildBrowserSourceModule(json);
+  assert.doesNotMatch(browserModule, /2025_Property_Tax_Bills|2026_Property_Tax_Bills/);
 });
 
 test("civic data is deeply frozen", () => {
@@ -47,6 +62,17 @@ test("withheld claims are absent from published facts", () => {
   assert.doesNotMatch(facts, /51\.06/);
   assert.doesNotMatch(facts, /0\.47%/);
   assert.doesNotMatch(facts, /final approved levy/i);
+});
+
+test("projected facts identify withheld bulk sources without publishing their URLs", () => {
+  const facts = projectFacts();
+  const withheld = facts.flatMap((fact) => fact.sources.filter((source) => source.url === null));
+
+  assert.deepEqual(
+    withheld.map((source) => source.id),
+    ["waterbury-tax-bills-2026", "waterbury-tax-bills-2025", "waterbury-tax-bills-2026"],
+  );
+  assert.equal(withheld.every((source) => source.access === "url_withheld_from_production"), true);
 });
 
 test("email paths use municipal allowlisted addresses", () => {

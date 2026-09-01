@@ -34,6 +34,25 @@ Assistant sharing is off by default. When enabled in a WebMCP-capable browser,
 the page exposes four narrow tools. No tool can browse, calculate tax, change a
 recipient, copy text, navigate, submit a form, open email, or send a message.
 
+## Durable civic record
+
+The same reviewed source pack also produces a public `CivicRecordV1` projection.
+It gives each claim and civic path a permanent URL, records the workflow
+lifecycle, preserves explicit unknowns and limitations, and links back to the
+official sources. Resident case text and contact destinations are excluded.
+Seven generated, no-JavaScript record pages make those citations readable and
+indexable without loading the interactive application.
+
+- Machine record: <https://navigator.govermont.co/civic-record.json>
+- Validation schema: <https://navigator.govermont.co/civic-record.schema.json>
+- Assistant index: <https://navigator.govermont.co/llms.txt>
+- Full assistant-readable record: <https://navigator.govermont.co/llms-full.txt>
+- Reviewed snapshot feed: <https://navigator.govermont.co/feed.xml>
+
+The JSON, assistant text, Atom feed, sitemap, and crawler instructions are
+generated deterministically from the reviewed source pack. Validation fails if
+any committed projection drifts.
+
 ## Run locally
 
 Requirements: Node.js 20 or newer. There are no runtime or development package
@@ -49,6 +68,7 @@ Open `http://127.0.0.1:4173`. Reloading clears the case.
 ## Tests
 
 ```bash
+npm run generate
 npm run validate
 npm test
 npm run test:security
@@ -65,8 +85,14 @@ replay, cancellation, and partial WebMCP registration failure.
 - `src/state.js`: in-memory case state and serialized mutation queue.
 - `src/webmcp.js`: consent-gated imperative WebMCP registration.
 - `src/handoff.js`: deterministic resident draft generation.
-- `data/waterbury-tax-2026.json`: reviewed civic source pack.
-- `data/waterbury-tax-2026.js`: identical browser-readable source pack.
+- `src/record-contract.js`: permanent record, claim, and path identifiers.
+- `data/waterbury-tax-2026.json`: full reviewed source pack used at build time.
+- `data/waterbury-tax-2026.js`: generated, production-safe browser projection.
+- `civic-record.json`: public, contact-free projection of the reviewed record.
+- `civic-record.schema.json`: strict project-local validation contract.
+- `scripts/source-pack.mjs`: deterministic browser-pack privacy boundary.
+- `scripts/civic-record-assets.mjs`: deterministic open-web projections.
+- `scripts/build-static.mjs`: exact production-asset allowlist builder.
 - `scripts/validate-source-pack.mjs`: source, hash, and destination gates.
 - `vercel.json`: isolated static deployment and restrictive security headers.
 
@@ -74,6 +100,12 @@ replay, cancellation, and partial WebMCP registration failure.
 
 - No private GoVermont code, data, API, or deployment is required.
 - No account, analytics, persistence, service worker, runtime API, or paid API.
+- Public discovery files contain no resident case text or direct contact
+  destination; they are passive static data under the same restrictive CSP.
+- Direct links to bulk property-bill PDFs are withheld from the entire deployed
+  artifact because those official documents contain owner data. Stable source
+  IDs and captured-evidence hashes preserve the audit trail without distributing
+  those owner-record destinations.
 - Case data stays in page memory and is cleared by reload or `Clear this case`.
 - The email URL contains only an exact allowlisted recipient and generic subject.
 - The resident copies the body separately; Go Vermont never sends it.

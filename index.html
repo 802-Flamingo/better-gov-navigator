@@ -7,14 +7,30 @@
       name="description"
       content="A source-backed Waterbury property-tax navigator that separates public facts from the questions an individual bill still requires."
     >
+    <meta name="author" content="802 Flamingo LLC">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://navigator.govermont.co/">
     <meta property="og:title" content="Go Vermont Civic Navigator">
     <meta
       property="og:description"
       content="Understand what Waterbury's public tax records establish, what remains unknown, and where to start."
     >
     <link rel="canonical" href="https://navigator.govermont.co/">
+    <link
+      rel="alternate"
+      type="application/json"
+      title="Waterbury 2026 property-tax civic record"
+      href="/civic-record.json"
+    >
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Go Vermont reviewed civic snapshots"
+      href="/feed.xml"
+    >
+    <link rel="describedby" type="text/plain" title="Assistant guide" href="/llms.txt">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/styles.css">
     <title>Go Vermont Civic Navigator</title>
   </head>
@@ -190,7 +206,7 @@
             <div id="need-options"></div>
           </fieldset>
 
-          <div id="path-options" class="path-options" aria-live="polite"></div>
+          <div id="path-options" class="path-options"></div>
           <button id="prepare-draft" type="button" disabled>Prepare draft</button>
           <a id="review-draft-link" class="command-link draft-ready-link" href="#your-draft" hidden>
             Draft ready: review destination and wording
@@ -284,6 +300,10 @@
           rel="noopener noreferrer"
         >Public source code</a>
         · Checked August 31, 2026
+      </p>
+      <p>
+        Machine-readable: <a href="/civic-record.json">Civic record (JSON)</a>
+        · <a href="/feed.xml">Reviewed snapshots (Atom)</a>
       </p>
     </footer>
 

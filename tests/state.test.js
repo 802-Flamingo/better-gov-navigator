@@ -112,6 +112,9 @@ test("assistant state reports a proposal without echoing its full text", async (
 test("assistant state stays within a compact response budget", async () => {
   const store = await readyStore({ consent: true });
   const response = store.readForAssistant();
+  assert.equal(response.record.schemaVersion, "CivicRecordV1");
+  assert.equal(response.record.id, "vt:municipality:waterbury:property-tax:2026");
+  assert.equal(response.record.sourceCount, 10);
   assert.equal(Buffer.byteLength(JSON.stringify(response), "utf8") < 2048, true);
 });
 
@@ -122,13 +125,29 @@ test("assistant path read is grounded in reviewed evidence and canonical unknown
   assert.equal(response.paths.length, 1);
   assert.equal(response.evidence.length, 3);
   assert.equal(response.canonicalUnknowns.length, 4);
+  assert.equal(response.record.canonicalUrl, "https://navigator.govermont.co/civic-record.json");
+  assert.equal(
+    response.paths[0].recordUrl,
+    "https://navigator.govermont.co/records/waterbury-property-tax-billing/",
+  );
   assert.equal(
     response.evidence.every(
-      (fact) => fact.statement && fact.limitation && fact.sourceUrls.length > 0,
+      (fact) =>
+        fact.statement &&
+        fact.limitation &&
+        fact.sourceUrls.length > 0 &&
+        fact.recordUrl.startsWith("https://navigator.govermont.co/records/"),
     ),
     true,
   );
+  assert.deepEqual(response.evidence[0].withheldSourceIds, ["waterbury-tax-bills-2026"]);
+  assert.deepEqual(response.evidence[1].withheldSourceIds, [
+    "waterbury-tax-bills-2025",
+    "waterbury-tax-bills-2026",
+  ]);
+  assert.deepEqual(response.evidence[2].withheldSourceIds, []);
   assert.doesNotMatch(JSON.stringify(response), /51\.06|0\.47%|final approved levy/i);
+  assert.doesNotMatch(JSON.stringify(response), /2025_Property_Tax_Bills|2026_Property_Tax_Bills/);
   assert.equal(Buffer.byteLength(JSON.stringify(response), "utf8") < 8192, true);
 });
 

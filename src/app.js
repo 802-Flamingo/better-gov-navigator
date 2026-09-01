@@ -9,6 +9,7 @@ import {
 } from "./civic-data.js";
 import { createNavigatorStore } from "./state.js";
 import { createWebMCPController } from "./webmcp.js";
+import { FACT_TITLES } from "./record-contract.js";
 
 const store = createNavigatorStore();
 const siteTools = createWebMCPController({ store });
@@ -52,12 +53,6 @@ const elements = {
 let statusTimer;
 let lastAnnouncedRevision = -1;
 
-const FACT_TITLES = Object.freeze({
-  "waterbury-2026-rates": "Published 2026 tax rates",
-  "waterbury-2026-change-pattern": "How the published rates changed",
-  "vermont-property-classification": "Homestead and nonhomestead property",
-});
-
 function createElement(tag, { className, text } = {}) {
   const element = document.createElement(tag);
   if (className) {
@@ -93,6 +88,18 @@ function appendOfficialLink(parent, source, labelPrefix = "Official source") {
 }
 
 function appendCompactSourceLink(parent, source) {
+  if (!source.url) {
+    const withheld = createElement("span", {
+      className: "source-withheld",
+      text: `${source.title} · bulk record link withheld`,
+    });
+    withheld.setAttribute(
+      "aria-label",
+      `Official source: ${source.publisher}, ${source.title}. Direct link withheld because the document contains property-owner information.`,
+    );
+    parent.append(withheld);
+    return;
+  }
   const link = createElement("a", { text: source.title });
   link.href = source.url;
   link.target = "_blank";
@@ -152,6 +159,7 @@ function renderFacts() {
   const fragment = document.createDocumentFragment();
   for (const fact of projectFacts()) {
     const item = createElement("article", { className: "evidence-item" });
+    item.id = `claim-${fact.id}`;
 
     const heading = createElement("div", { className: "evidence-heading" });
     heading.append(
@@ -261,6 +269,7 @@ function renderPaths(state) {
   const fragment = document.createDocumentFragment();
   for (const path of paths) {
     const row = createElement("article", { className: "path-row" });
+    row.id = `path-${path.id}`;
     row.append(createElement("h3", { text: path.label }));
     row.append(createElement("p", { text: path.purpose }));
     row.append(
@@ -281,8 +290,15 @@ function renderPaths(state) {
     input.value = path.id;
     input.checked = state.selectedPathId === path.id;
     input.disabled = path.stale;
-    input.addEventListener("change", () => {
-      store.selectPath(path.id).catch(showError);
+    input.addEventListener("change", async () => {
+      try {
+        await store.selectPath(path.id);
+        const replacement = [...elements.pathOptions.querySelectorAll('input[name="civic-path"]')]
+          .find(({ value }) => value === path.id);
+        replacement?.focus({ preventScroll: true });
+      } catch (error) {
+        showError(error);
+      }
     });
     label.append(
       input,

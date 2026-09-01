@@ -722,6 +722,11 @@ input[type="radio"] {
   width: fit-content;
 }
 
+.source-links .source-withheld {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .unknowns-list {
   display: grid;
   gap: 0.75rem;
@@ -973,6 +978,85 @@ footer {
 
 footer p {
   margin: 0.3rem 0;
+}
+
+.record-document {
+  margin: 0 auto;
+  max-width: 860px;
+  padding: 4.5rem 1.25rem 5rem;
+}
+
+.record-document-header {
+  margin-bottom: 2.75rem;
+}
+
+.record-document-header h1 {
+  font-size: 3.5rem;
+  line-height: 1.05;
+  margin: 0.55rem 0 1rem;
+  max-width: 15ch;
+}
+
+.record-document-header > p:last-child {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  max-width: 58ch;
+}
+
+.record-block {
+  border-top: 1px solid var(--line-strong);
+  padding: 2rem 0;
+}
+
+.record-block h2 {
+  font-size: 1.25rem;
+  margin: 0 0 0.9rem;
+}
+
+.record-block .fact-statement {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+.limitation-block {
+  border-left: 4px solid var(--gold);
+  padding-left: 1.25rem;
+}
+
+.record-source-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.record-source-list li {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 0;
+}
+
+.record-source-list li:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.record-source-list span {
+  color: var(--muted);
+}
+
+.record-actions {
+  margin: 2rem 0 0;
+}
+
+@media (max-width: 520px) {
+  .record-document {
+    padding-top: 3rem;
+  }
+
+  .record-document-header h1 {
+    font-size: 2.1rem;
+  }
 }
 
 .status-message {

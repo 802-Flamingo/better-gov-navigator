@@ -6,9 +6,6 @@ LICENSE
 NOTICE.md
 SECURITY.md
 SOURCES.md
-data/*.json
+dist
 docs
-scripts
 tests
-package.json
-package-lock.json
