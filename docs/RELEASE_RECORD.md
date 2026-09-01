@@ -2,14 +2,14 @@
 
 ## Production artifact
 
-- Recorded: August 31, 2026
-- Git commit: `713d2f42379597448696c393b16bcfbafbd137ba`
-- Vercel deployment ID: `dpl_5wWMTvTUnhz54JkEfkKhNYYRUm4B`
+- Recorded: September 1, 2026
+- Git commit: `2169ace9775063ca1ba2ef135605846194f4c627`
+- Vercel deployment ID: `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`
 - Branded URL: `https://navigator.govermont.co`
 - Direct fallback: `https://better-gov-navigator.vercel.app`
 - Deployment-specific rollback artifact:
-  `https://better-gov-navigator-dfldls5mo-802-flamingo.vercel.app`
-- Prior known-good rollback deployment: `dpl_8b2bruq3Q5W6mZbFD2k3tQyCeTpG`
+  `https://better-gov-navigator-jgdutqc4d-802-flamingo.vercel.app`
+- Prior known-good rollback deployment: `dpl_5wWMTvTUnhz54JkEfkKhNYYRUm4B`
 - Expected incremental cost: `$0`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 
@@ -24,17 +24,18 @@ an operator rollback artifact and is not represented as a public fallback.
 ## Verified gates
 
 - The production manifest contains eleven static files and no runtime API.
-- Vercel reports the deployment `READY` with exact `gitCommitSha`
-  `713d2f42379597448696c393b16bcfbafbd137ba` and no dirty-tree marker.
+- Vercel reports the deployment `READY` with exact `githubCommitSha`
+  `2169ace9775063ca1ba2ef135605846194f4c627` and no dirty-tree marker.
 - The source pack contains ten official Waterbury or Vermont sources, three
   publishable facts, and four deterministic starting paths.
-- All 37 built-in validation, state, security, and tool-contract tests pass.
+- All 52 built-in validation, state, security, and tool-contract tests pass.
 - The production edge returns the restrictive CSP, HSTS, no-referrer,
   `nosniff`, frame denial, and restrictive Permissions Policy.
 - `README.md`, Git internals, tests, scripts, and documentation are not served by
   the production deployment.
-- Real ChatGPT in-app-browser calls passed discovery, consent, stale-revision,
-  proposal, handoff, and revocation checks on both direct and branded URLs.
+- Real production ChatGPT in-app-browser calls passed discovery, consent,
+  evidence-grounded path reads, proposal review, deterministic handoff, exact
+  destination review, and revocation checks on the branded URL.
 - The new branded release passed discovery, consent, exact-path, deterministic
   handoff, proposal, stale-revision, revocation, and zero-console-error checks.
 - Mobile checks at 320px and 390px passed without horizontal overflow or a
@@ -47,7 +48,15 @@ an operator rollback artifact and is not represented as a public fallback.
   disclosures without making long claims the default scanning surface.
 - Production WebMCP re-verification showed zero tools before consent, four
   bounded tools after consent, a successful read of synthetic approved state,
-  and zero tools immediately after revocation.
+  three reviewed evidence records with source URLs and limitations, four
+  canonical unknowns, and zero tools immediately after revocation.
+- The optional proposal tool could not create the resident's initial case,
+  left its wording staged until explicit acceptance, and kept accepted
+  assistant questions labeled `Assistant suggestion:`. Revocation removed the
+  assistant-added questions while preserving resident-accepted wording.
+- Draft action controls remained unavailable until the resident reviewed the
+  exact allowlisted email address and phone number. After review, only the
+  applicable copy, email, and phone controls became available.
 - A complete production regression exercised all four resident needs: billing,
   assessment, homestead or credit, and municipal budget. Each exposed exactly
   one fresh reviewed path, kept draft actions locked until the resident selected
@@ -68,8 +77,12 @@ an operator rollback artifact and is not represented as a public fallback.
   warnings or errors. The Codex Chrome connector does not expose Chrome's
   `executeTool` testing surface, so this pass proves the real Chrome lifecycle
   but not a Chrome-side tool invocation.
-- An anonymous public clone passed the source validator, secret and symlink
-  scans, and all 37 tests on both public `main` and the exact production commit.
+- A clean production tree passed the source validator, secret scan, syntax
+  checks, and all 52 tests at the exact deployed commit.
+- Fresh desktop and mobile submission captures were recorded from the branded
+  production URL after deployment verification.
+- An independent MOE competition red team scored this release `18.5/20` as an
+  internal readiness estimate. This is not an official competition score.
 
 ## Open release gates
 

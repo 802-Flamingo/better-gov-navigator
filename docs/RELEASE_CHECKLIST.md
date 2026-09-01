@@ -22,7 +22,7 @@
 
 ## Security and browser
 
-- [x] `npm run check` passes with zero package dependencies.
+- [x] `npm run check` passes all 52 tests with zero package dependencies.
 - [x] Registration, revocation, duplicate, replay, cancellation, and partial
   failure tests pass.
 - [x] Resident body is absent from the email URL.
@@ -32,6 +32,10 @@
 - [x] Native controls, semantic headings, described disclosures, source
   publishers, and live status announcements are present.
 - [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
+- [x] Production path reads return reviewed claims, limitations, exact source
+  URLs, and canonical unknowns instead of an ungrounded path label alone.
+- [x] Production proposal acceptance preserves assistant-question provenance;
+  exact destination controls remain locked until resident review.
 - [x] Chrome 152 registration and revocation canary with WebMCP testing enabled:
   exactly four tools appeared after consent and disappeared after revocation.
 - [ ] Execute one read-only `get_handoff_state` call through Chrome's WebMCP
@@ -51,14 +55,20 @@
 - [x] Confirm both branded and direct URLs; keep direct URL in submission notes.
 - [x] Confirm expected incremental cost remains $0.
 - [x] Deploy reviewed design PR #1 and high-zoom evidence correction PR #2.
+- [x] Deploy competition hardening PR #4 and record deployment
+  `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`.
 - [x] Verify exact production SHA
-  `713d2f42379597448696c393b16bcfbafbd137ba`.
+  `2169ace9775063ca1ba2ef135605846194f4c627`.
 
 ## Submission
 
 - [ ] Record and publish the under-three-minute YouTube demo with audio.
-- [ ] Complete title, tagline, description, technology, links, and images.
-- [ ] Verify the public repository, license, live URL, and video in a logged-out
-  browser.
+- [x] Complete title, tagline, description, technology, live and repository
+  links, and production images.
+- [ ] Add the public YouTube URL to the prepared submission.
+- [x] Verify the public repository, MIT license, branded URL, and direct fallback
+  without an authenticated session.
+- [ ] Verify the public YouTube video without an authenticated session once its
+  URL is available.
 - [ ] Submit by September 3 at 10:00 a.m. Pacific.
 - [ ] Freeze site, repository, and Devpost entry through judging.

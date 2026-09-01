@@ -63,7 +63,8 @@ source code.
 - Direct Vercel fallback: `https://better-gov-navigator.vercel.app`
 - Public repository: `https://github.com/802-Flamingo/better-gov-navigator`
 - Public YouTube demo: `TBD`
-- Production commit: `Pending final release verification`
+- Production commit: `2169ace9775063ca1ba2ef135605846194f4c627`
+- Production deployment: `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`
 
 ## Technologies
 
@@ -74,9 +75,10 @@ WebMCP, JavaScript ES modules, HTML, CSS, JSON, Node.js test runner, Vercel.
 - Desktop product capture: `docs/assets/navigator-desktop.jpg`
 - Mobile product capture: `docs/assets/navigator-mobile.jpg`
 
-Both captures show the useful resident experience and independent-service
-notice. Neither contains an account, credential, private repository, or real
-resident case.
+The mobile capture shows the first-use experience and independent-service
+notice. The desktop capture shows a synthetic, reviewed handoff with exact
+destination controls. Neither contains an account, credential, private
+repository, or real resident case.
 
 ## Boundaries
 
