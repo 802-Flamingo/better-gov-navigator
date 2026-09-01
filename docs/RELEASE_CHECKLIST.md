@@ -32,7 +32,12 @@
 - [x] Native controls, semantic headings, described disclosures, source
   publishers, and live status announcements are present.
 - [x] Real deployed ChatGPT discovery, call, stale-state, and revocation canary.
-- [ ] Real Chrome 149+ discovery and call canary with WebMCP testing enabled.
+- [x] Chrome 152 registration and revocation canary with WebMCP testing enabled:
+  exactly four tools appeared after consent and disappeared after revocation.
+- [ ] Execute one read-only `get_handoff_state` call through Chrome's WebMCP
+  DevTools pane or a compatible Chrome agent. The current Codex Chrome
+  connector validates the real registration lifecycle but does not expose
+  Chrome's tool-execution hook.
 - [x] Production CSP and all security headers verified from the network edge.
 - [x] Anonymous clean-checkout tests pass on public `main` and the exact
   production SHA recorded by Vercel.

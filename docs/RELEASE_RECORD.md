@@ -48,13 +48,34 @@ an operator rollback artifact and is not represented as a public fallback.
 - Production WebMCP re-verification showed zero tools before consent, four
   bounded tools after consent, a successful read of synthetic approved state,
   and zero tools immediately after revocation.
+- A complete production regression exercised all four resident needs: billing,
+  assessment, homestead or credit, and municipal budget. Each exposed exactly
+  one fresh reviewed path, kept draft actions locked until the resident selected
+  that path, and preserved the no-send boundary. Email handoffs contained only
+  an allowlisted recipient and generic subject; resident text never entered a
+  URL.
+- The full production page passed geometry checks at 1440x900, 640x900 (the
+  200% reflow equivalent), 390x844, and 320x844 with no page-level horizontal
+  overflow or clipped visible text. Heading order, external-link protections,
+  and production security headers also passed reinspection.
+- Waterbury and Vermont primary sources and all four handoff destinations were
+  rechecked on August 31, 2026. The known difference between Waterbury's
+  prior-year comparison figure and the issued 2025 bill components remains
+  intentionally undisclosed as a percentage claim; the application does not
+  infer a reconciliation.
+- Chrome 152 with `WebMCP testing` enabled registered exactly four production
+  tools after consent, removed them after revocation, and emitted no browser
+  warnings or errors. The Codex Chrome connector does not expose Chrome's
+  `executeTool` testing surface, so this pass proves the real Chrome lifecycle
+  but not a Chrome-side tool invocation.
 - An anonymous public clone passed the source validator, secret and symlink
   scans, and all 37 tests on both public `main` and the exact production commit.
 
 ## Open release gates
 
-- Enable the Chrome WebMCP testing flag with operator approval, then run the
-  real Chrome discovery and execution canary.
+- Execute `get_handoff_state` once through Chrome's WebMCP DevTools pane or a
+  compatible Chrome agent. Chrome registration and revocation have passed; the
+  remaining check is the Chrome-side invocation itself.
 - Publish the public YouTube demonstration and complete the Devpost submission.
 
 These open gates do not alter the recorded production artifact. Any source or
