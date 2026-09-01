@@ -8,7 +8,8 @@
 - Vercel production deployment: `dpl_5tvpkqKfiTeNcYT3AyZet5W9SqFv`
 - Deployment-specific URL:
   `https://better-gov-navigator-8lb3ktknp-802-flamingo.vercel.app`
-- Verified preview: `dpl_2eTmtNXjww9R177sXRgWwLezSApp`
+- Verified preview: `dpl_2eTmtNXjww9R177sXRgWwLezSApp` (deleted after
+  production promotion)
 - Branded URL: `https://navigator.govermont.co`
 - Direct public fallback: `https://better-gov-navigator.vercel.app`
 - Prior known-good rollback: `dpl_FdkWUSveYDbsmugY4PN94bCjsm7G`
