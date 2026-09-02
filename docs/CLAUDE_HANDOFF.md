@@ -82,10 +82,14 @@ Resident state remains in page memory and disappears on reload.
 
 The product has no known defect. These submission and maintenance items remain:
 
-1. Execute one read-only `get_handoff_state` call through Chrome's actual WebMCP
-   DevTools testing surface or a compatible Chrome agent. Real Chrome
-   registration and revocation already passed; the connector used previously did
-   not expose Chrome's tool-execution hook.
+1. SUPERSEDED September 1, 2026. This asked for one read-only `get_handoff_state`
+   call through Chrome's WebMCP DevTools surface. Real tool execution against
+   production was already proven by the ChatGPT in-app-browser canary
+   (discovery, call, stale state, revocation), and Chrome 152 proved the
+   registration lifecycle in both directions. The item requested a second route
+   to a demonstrated property, not missing coverage, and is closed as redundant
+   rather than left reading like a gap. Do not reopen it by driving a page-side
+   handler from a console and calling that an agent invocation.
 2. Record and publish the under-three-minute public YouTube demonstration using
    `docs/DEMO_SCRIPT.md` and `docs/DEMO_NARRATION.md`.
 3. Add the public video URL to `docs/DEVPOST_SUBMISSION.md`, verify the video in a
@@ -96,6 +100,56 @@ The product has no known defect. These submission and maintenance items remain:
 Do not change production merely to clear a checklist item. A source or product
 change requires a new branch, tests, browser verification, reviewed PR,
 deployment, production canary, and release-record update.
+
+## Decisions of record — September 1, 2026
+
+Taken after a full coupling audit of the codebase and an apex-model architecture
+review. Recorded here so a later session does not relitigate them.
+
+**Second municipality: add at most ONE, with no in-page town selector.** The
+single-town assumption lives entirely in the build layer. `src/state.js`,
+`src/app.js`, `src/webmcp.js`, and `src/handoff.js` contain zero Waterbury
+literals, so a second reviewed pack can be published as first-class civic records
+— record pages, feed entry, sitemap, `llms.txt`, civic record — discoverable by
+URL and by agents, while the interactive page still defaults to Waterbury and no
+human gate enters the blast radius. A visible town selector was rejected: it
+requires making `CIVIC_DATA` dynamic and putting town identity into
+`initialState()`, which risks the 29 runtime tests in `state.test.js` and
+`webmcp.test.js` for a dropdown. Agent-native discovery is the better story here
+than a human control. A third town would prove data entry, not replication.
+
+**The `vermont-` / `waterbury-` id split is a rule now, not a coincidence.**
+State-scoped records (`vermont-property-classification`,
+`vermont-homestead-credit-help`) are shared across Vermont towns; town-scoped
+records carry the town prefix. A second pack must therefore carry its
+state-scoped entries **byte-identical** to Waterbury's — same capture, same
+`checkedAt`, same excerpt, same hash — and the validator must assert that any id
+appearing in two packs is deep-equal. That converts a URL-collision hazard into a
+demonstrable property.
+
+**No fifth WebMCP tool.** The two read tools take an empty input schema on
+purpose: an assistant cannot pass a town, category, or recipient, so it cannot
+steer the resident. That is a security property, not a thin surface, and it is
+the answer to anyone who reads four tools as small. A `get_evidence_for_claim`
+tool was considered and declined — the evidence is already agent-reachable,
+since `pathsForAssistant` returns each claim's `recordUrl` and source URLs
+(`src/state.js:299-315`) and the excerpts live at those public record pages and
+in `llms-full.txt`. Revisit it after the competition, not before.
+
+**The hand-written `allowedDestinations` map stays hand-written.** Its
+duplication against the source pack IS the human gate: a reviewer types each
+contact twice, from two independent official sources, into two files. Do not
+generate it programmatically to remove the "redundancy."
+
+**Abort criteria for any second-town work.** Close the branch unmerged and ship
+Waterbury alone if any one of these holds: it is not merged, deployed, and
+live-verified by September 2 at approximately 6:00 p.m. Pacific (no deadline-day
+merges of civic facts); no candidate town clears two-source corroboration for
+every contact destination; the runtime test files need edits, which would mean
+the build-layer firewall was breached; or an adversarial reviewer finds a claim
+that cannot be fixed by deleting it or moving it to `unknowns`. A town that fails
+the gate produces no page. Refusing to publish is the product, and the submission
+text says so honestly rather than manufacturing coverage.
 
 ## Operating instructions
 

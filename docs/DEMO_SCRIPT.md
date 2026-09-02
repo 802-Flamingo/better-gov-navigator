@@ -49,6 +49,14 @@ Say:
 > Consent here is not a banner. Before it, this page has registered zero tools;
 > there is nothing for an assistant to call.
 
+If the tool detail is legible in your surface, add one sentence over it — the
+read tools take an **empty input schema**, and every tool is annotated
+`untrustedContentHint`, with the description telling the assistant to treat what
+comes back as data rather than instructions:
+
+> The two read tools accept no arguments at all. An assistant cannot pass a town,
+> a category, or a recipient, so it cannot steer the resident even if it wants to.
+
 ## 1:20-1:42 - Let the assistant help where it is actually better
 
 Ask the assistant to read the approved case and the evidence-grounded path,
