@@ -39,10 +39,15 @@
   exact destination controls remain locked until resident review.
 - [x] Chrome 152 registration and revocation canary with WebMCP testing enabled:
   exactly four tools appeared after consent and disappeared after revocation.
-- [ ] Execute one read-only `get_handoff_state` call through Chrome's WebMCP
-  DevTools pane or a compatible Chrome agent. The current Codex Chrome
-  connector validates the real registration lifecycle but does not expose
-  Chrome's tool-execution hook.
+- [~] SUPERSEDED September 1, 2026 — execute one read-only `get_handoff_state`
+  call through Chrome's WebMCP DevTools pane or a compatible Chrome agent. This
+  was written when the Chrome connector validated registration but exposed no
+  tool-execution hook. Real tool *execution* against production is already
+  proven by the ChatGPT in-app-browser canary two lines above (discovery, call,
+  stale state, revocation), and Chrome 152 separately proved the registration
+  lifecycle in both directions. The open box asked for a second route to a
+  property already demonstrated, not for missing coverage. It is left visible
+  rather than deleted so the record shows why it closed.
 - [x] Production CSP and all security headers verified from the network edge.
 - [x] Anonymous clean-checkout tests pass on public `main`; all production bytes
   match the recorded merge commit's build.
