@@ -141,6 +141,23 @@ duplication against the source pack IS the human gate: a reviewer types each
 contact twice, from two independent official sources, into two files. Do not
 generate it programmatically to remove the "redundancy."
 
+**Outcome, September 2, 2026: the second town was attempted and abandoned on the
+gate.** Woodstock was selected and captured; it failed. Its 2026 rates are
+published only inside individual residents' tax bills, so using them would
+invert the owner-record boundary the sanitizer exists to enforce; the bills omit
+their units, so publishing a rate would require an inference; and the working
+tax-billing contact and the 2026 grievance dates are each single-source. A
+fourth claimed blocker — a self-contradiction in the town's grievance
+deadline — was REMOVED after an independent verification pass could not
+reproduce it against the live documents; do not reintroduce it from older
+notes. Three of four contact destinations DID
+corroborate cleanly, and the run established that Woodstock has two live
+municipal entities whose village boundary determines the applicable municipal
+rate. Full record: `docs/REPLICATION_ATTEMPT_WOODSTOCK.md`. Ten further towns
+were surveyed and none cleared the bar. **Do not re-run this attempt hoping for
+a different answer** — the four blockers are named, and three of them can only
+be closed by a person contacting the town.
+
 **Abort criteria for any second-town work.** Close the branch unmerged and ship
 Waterbury alone if any one of these holds: it is not merged, deployed, and
 live-verified by September 2 at approximately 6:00 p.m. Pacific (no deadline-day

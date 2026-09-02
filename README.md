@@ -132,7 +132,9 @@ See [SOURCES.md](SOURCES.md), [SECURITY.md](SECURITY.md),
 [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full contracts. The
 [replication blueprint](docs/REPLICATION_BLUEPRINT.md) explains how the bounded
 method can expand to another municipality without claiming that coverage exists
-today. The current operator and Claude handoff is maintained in
+today. That gate has been run once against a second town, Woodstock, and
+[it failed](docs/REPLICATION_ATTEMPT_WOODSTOCK.md) — which is why there is no
+Woodstock page here. The current operator and Claude handoff is maintained in
 [docs/CLAUDE_HANDOFF.md](docs/CLAUDE_HANDOFF.md).
 
 ## License

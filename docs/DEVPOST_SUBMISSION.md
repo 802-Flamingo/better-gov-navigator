@@ -43,11 +43,51 @@ published, tested, and reusable:
   as one that is *current*.
 
 [`docs/REPLICATION_BLUEPRINT.md`](REPLICATION_BLUEPRINT.md) states the seven-step
-gate a second municipality must pass, and says plainly that passing it is source
-work rather than a looser prompt. Waterbury is the proof that the gate is
-passable, not a claim that any other town has passed it. We would rather ship one
-town that is true than fifty that are plausible — and the whole point of writing
-the gate down is that the next town is somebody else's to add.
+gate a second municipality must pass. We then ran that gate against a second
+Vermont town, Woodstock, and **it failed — so there is no Woodstock page in this
+product.** The full run is published at
+[`docs/REPLICATION_ATTEMPT_WOODSTOCK.md`](REPLICATION_ATTEMPT_WOODSTOCK.md).
+
+It is worth saying what stopped it, because the failures are the argument:
+
+- Woodstock publishes **no 2026 summary rate table**. The rates exist only inside
+  individual residents' tax bills, which identify named owners. This product
+  already withholds bulk owner-record destinations from its entire deployed
+  artifact; sourcing a headline fact from three named residents' bills would
+  invert that boundary.
+- Those bills **never print their units**. Reading "per $100 of assessed value"
+  into the numbers means applying Vermont convention — an inference, and this
+  product does not infer.
+- Three of four contact destinations corroborated cleanly across two independent
+  official sources. The fourth — the office that actually handles tax bills —
+  appeared on exactly one page, so it was not publishable. The 2026 grievance
+  dates were likewise single-source, and a date a resident relies on to preserve
+  an appeal right is the wrong thing to publish from one uncorroborated
+  document.
+
+Along the way the gate also established something a flat rate table would have
+gotten wrong for a large share of the town: Woodstock has **two live municipal
+entities**, and which municipal rate applies depends on whether a parcel sits
+inside the Village.
+
+We would rather ship one town that is true than fifty that are plausible. A
+municipality that fails the gate produces no page — that is the mechanism
+working, not a gap in coverage.
+
+We then ran the same discipline over our own write-up of the failure. An
+independent verification pass, given the text and a mandate to disprove it,
+removed a fourth blocker we had claimed: an apparent self-contradiction in the
+town's grievance dates could not be reproduced against the live documents. It is
+struck from the record. The remaining blockers held, and one of them alone —
+a rate whose units are not printed anywhere — is disqualifying.
+
+That is the condition of the civic web that makes this problem worth solving.
+Official sites return HTTP 403 to automated retrieval. The state's own assessor
+certification list contains malformed rows where a person's first name sits in
+the town column. Documents change under the same URL, or move to a new one. None
+of that is unusual or anyone's scandal — it is simply what a browsing agent will
+meet, and it is exactly why an agent should be handed a bounded contract with
+captured evidence rather than a page to guess from.
 
 ## Why WebMCP fits
 
