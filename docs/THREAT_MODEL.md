@@ -40,11 +40,30 @@
 - No-JavaScript claim and path pages, a strict project-local schema, and one
   exact shared local/production asset allowlist.
 - A shared deterministic sanitizer removes bulk issued-bill URLs containing
-  owner information before the browser module and all public assets are built;
-  tests reject those URLs anywhere in the exact production output.
+  owner information before the browser module and all public assets are built.
+  Tests assert those URLs are absent from the generated browser module, the
+  public `CivicRecordV1` record (which also feeds `llms-full.txt`), and
+  assistant reads; they do not scan every served file. **Those tests run under
+  `npm run check`, not in the deploy build** — the Vercel build chain is
+  `generate && validate && build-static`, which does not invoke them. A green
+  deploy proves the served assets match the sanitizer's output (`validate`
+  asserts that), not that the withheld-source list is complete or that the
+  URLs are absent from the served bytes. Run `npm run check` before any release.
 - `textContent` rendering; no dynamic HTML.
-- Bounded narrative fields; dangerous display-control characters removed from
-  resident input and rejected in assistant proposals.
+- Bounded narrative fields. **C0 control characters other than tab, line
+  feed, and carriage return; DEL; and the bidirectional embedding, override,
+  and isolate controls (U+202A–U+202E, U+2066–U+2069)** are removed from
+  resident input and rejected in assistant proposals. This is narrower than
+  "dangerous display-control characters": zero-width and other `Cf` format
+  characters (including BOM, soft hyphen, bidi marks, and Unicode Tags
+  U+E0000–U+E007F), C1 controls (U+0080–U+009F), and variation selectors are
+  **not** currently rejected, and `acceptProposal` does not re-normalize
+  accepted wording. An assistant can therefore stage text that the resident
+  cannot see before approving it. No such text can be sent by this site — there
+  is no network capability, the `mailto:` carries no body, and every outbound
+  action is a human button — but a downstream reader of the copied draft could
+  act on it. Known limitation, September 2, 2026; corrected here rather than
+  left overstated.
 - One registration lifecycle and one serialized mutation queue.
 - Consent, cancellation, generation, source freshness, and revision checks.
 - Partial registration abort and last-known manual interface.
