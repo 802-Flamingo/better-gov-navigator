@@ -58,11 +58,12 @@ It is worth saying what stopped it, because the failures are the argument:
 - Those bills **never print their units**. Reading "per $100 of assessed value"
   into the numbers means applying Vermont convention — an inference, and this
   product does not infer.
-- The town's own 2026 grievance application **contradicts itself on the
-  deadline**, giving June 12 in one sentence and June 14 in another.
 - Three of four contact destinations corroborated cleanly across two independent
   official sources. The fourth — the office that actually handles tax bills —
-  appeared on exactly one page, so it was not publishable.
+  appeared on exactly one page, so it was not publishable. The 2026 grievance
+  dates were likewise single-source, and a date a resident relies on to preserve
+  an appeal right is the wrong thing to publish from one uncorroborated
+  document.
 
 Along the way the gate also established something a flat rate table would have
 gotten wrong for a large share of the town: Woodstock has **two live municipal
@@ -71,13 +72,22 @@ inside the Village.
 
 We would rather ship one town that is true than fifty that are plausible. A
 municipality that fails the gate produces no page — that is the mechanism
-working, not a gap in coverage. Ten further Vermont towns were surveyed under the
-same bar and none cleared it either; two of them return HTTP 403 to automated
-retrieval on their own official sites, and the state's assessor certification
-list, the obvious corroboration source, turned out to contain malformed rows and
-an assessor attributed to the wrong town. That is the real condition of the civic
-web, and it is exactly why an agent should be handed a bounded contract instead
-of a page to guess from.
+working, not a gap in coverage.
+
+We then ran the same discipline over our own write-up of the failure. An
+independent verification pass, given the text and a mandate to disprove it,
+removed a fourth blocker we had claimed: an apparent self-contradiction in the
+town's grievance dates could not be reproduced against the live documents. It is
+struck from the record. The remaining blockers held, and one of them alone —
+a rate whose units are not printed anywhere — is disqualifying.
+
+That is the condition of the civic web that makes this problem worth solving.
+Official sites return HTTP 403 to automated retrieval. The state's own assessor
+certification list contains malformed rows where a person's first name sits in
+the town column. Documents change under the same URL, or move to a new one. None
+of that is unusual or anyone's scandal — it is simply what a browsing agent will
+meet, and it is exactly why an agent should be handed a bounded contract with
+captured evidence rather than a page to guess from.
 
 ## Why WebMCP fits
 

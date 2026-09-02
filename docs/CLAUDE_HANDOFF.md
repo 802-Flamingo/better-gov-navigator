@@ -145,9 +145,12 @@ generate it programmatically to remove the "redundancy."
 gate.** Woodstock was selected and captured; it failed. Its 2026 rates are
 published only inside individual residents' tax bills, so using them would
 invert the owner-record boundary the sanitizer exists to enforce; the bills omit
-their units, so publishing a rate would require an inference; the town's own
-2026 grievance application contradicts itself on the deadline; and the working
-tax-billing contact is single-source. Three of four contact destinations DID
+their units, so publishing a rate would require an inference; and the working
+tax-billing contact and the 2026 grievance dates are each single-source. A
+fourth claimed blocker — a self-contradiction in the town's grievance
+deadline — was REMOVED after an independent verification pass could not
+reproduce it against the live documents; do not reintroduce it from older
+notes. Three of four contact destinations DID
 corroborate cleanly, and the run established that Woodstock has two live
 municipal entities whose village boundary determines the applicable municipal
 rate. Full record: `docs/REPLICATION_ATTEMPT_WOODSTOCK.md`. Ten further towns

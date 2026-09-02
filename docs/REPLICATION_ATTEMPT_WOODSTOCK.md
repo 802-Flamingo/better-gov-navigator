@@ -57,13 +57,24 @@ into the numbers requires applying standard Vermont grand-list convention. That
 is an inference, and this product does not infer. A rate published without
 captured units is either unusable or misleading.
 
-**3. The town's own 2026 grievance application contradicts itself on the
-deadline.** One sentence reads "Submit application after April 1 and before the
-deadline of June 12th 2026." A later sentence in the same official PDF reads
-"All Grievance Applications must be in writing and submitted via email or mail
-by the close of grievance day, June 14th." Two days apart, one document, no
-wording that distinguishes a submission date from a postmark date. Publishing
-either date would state as fact something the town itself has not settled.
+**3. The 2026 grievance dates were single-source, and the capture of them did
+not survive verification.** The initial capture reported an internal
+contradiction in the town's grievance application — a June 12 deadline in one
+sentence and a June 14 deadline in another. An independent verification pass
+then fetched the live documents and could not reproduce it: the grievance notice
+states June 12 three times, the application states it twice, and no "June 14"
+appears in either. The verifier also reached an application PDF under a
+different filename than the one originally captured, so this is either a
+transcription error in the capture or a document that changed between the two
+reads, and the archive that would settle it was unreachable at the time of
+checking.
+
+The contradiction is therefore **not** a finding, and is recorded here only so
+that nobody re-derives it from the earlier notes. What remains true is the
+weaker, sufficient fact: the 2026 grievance dates were found in a single
+official document with no independent corroboration, and a date that a resident
+would rely on to preserve an appeal right is exactly the wrong place to publish
+from one uncorroborated source.
 
 **4. The working tax-billing contact is single-source.** The office a resident
 would actually reach about a bill appears on one page of the town's own site,
@@ -81,30 +92,42 @@ merger.
 
 ## What a human would have to do to close it
 
-1. Ask the Assessors' office or the Finance office to resolve the June 12 versus
-   June 14, 2026 grievance deadline and supply one citable date.
+1. Obtain or locate a published FY2026 rate table, with units printed, that is
+   not a named resident's tax bill. This is the blocker that matters; without it
+   there is no publishable rate.
 2. Get the town to state, for public-facing purposes, whether a resident with a
    tax-bill question should reach the elected Treasurer or the Finance office.
-3. Obtain or locate a published FY2026 rate table, with units, that is not a
-   named resident's bill.
+3. Confirm the 2026 grievance and appeal dates against a second official
+   document, and settle which application PDF is current — two filenames were
+   observed.
 4. Ask which charter year the town considers authoritative.
 
-Items 1, 2, and 4 require contacting the town. Nothing in this project contacts
+Items 2, 3, and 4 require contacting the town. Nothing in this project contacts
 anyone on a resident's behalf, and that applies to its own research too — these
 are calls a person makes.
 
 ## The conclusion worth keeping
 
 Woodstock is not a poorly documented town. It publishes more, and more
-structurally interesting material, than most of the ten other Vermont
-municipalities surveyed alongside it — none of which cleared the bar either.
-Two of those ten return HTTP 403 to automated retrieval on their own official
-sites. The Vermont Department of Taxes assessor certification list, the obvious
-second source for a contact, was found to contain malformed rows and at least
-one assessor tied to the wrong town, and was therefore discarded as a standalone
-corroboration source partway through this attempt.
+structurally interesting material, than most of a separate sample of Vermont
+municipalities looked at alongside it, none of which we were able to verify as
+clearing the bar. That survey is not offered as evidence here: it was
+lighter-touch than this attempt, several of its checks were themselves defeated
+by official sites returning HTTP 403 to automated retrieval, and its towns are
+not individually documented. Treat it as context for why this attempt was run
+carefully, not as a finding.
+
+The Vermont Department of Taxes assessor certification list — the obvious second
+source for a municipal contact — was discarded as a standalone corroboration
+source partway through this attempt after it was found to contain malformed
+rows, including entries where a person's first name occupies the town column and
+the actual town is lost. That defect is confirmed. A stronger suspicion, that
+the list also attributes an assessor to the wrong town, was **not** confirmed
+and is not claimed.
 
 The gate did what it was built to do. The failure modes it caught were a privacy
-boundary, an inferred unit, a self-contradicting official document, and an
-uncorroborated destination — every one of them a thing that would have reached a
-real resident as a confident, wrong answer.
+boundary, an inferred unit, and an uncorroborated destination — every one of
+them a thing that would have reached a real resident as a confident, wrong
+answer. It is worth adding that a verification pass over this very document
+removed a fourth claimed failure that could not be reproduced. The gate applies
+to our own reporting, not only to the towns.
