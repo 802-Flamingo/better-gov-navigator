@@ -70,6 +70,22 @@ select a need, alter a revision, clear a draft, or grant assistant consent.
   an existing draft.
 - Release rule: remove its definition, registration, and UI if any real-browser,
   consent, stale-state, cancellation, or hostile-input gate fails.
+- Open against that rule as of September 2, 2026: the hostile-input gate is
+  **partial**. It rejects C0 controls (other than tab and line breaks), DEL,
+  and the bidi embedding/override/isolate controls (U+202A–U+202E,
+  U+2066–U+2069), but not zero-width and other `Cf` format characters (BOM,
+  soft hyphen, bidi marks, Unicode Tags U+E0000–U+E007F), C1 controls
+  (U+0080–U+009F), or variation selectors, and `acceptProposal` copies accepted
+  wording without re-normalizing it. An assistant can stage characters the
+  resident cannot see in the text they approve. The tool is retained for the
+  competition entry because the failure cannot cause this site to transmit
+  anything — no network capability (`connect-src 'none'`), the `mailto:` carries
+  no body, and copy, email, phone, appointment, and records actions are human
+  buttons only. Fix before any use beyond the demonstration: reject `\p{Cf}`
+  (optionally allowing U+200D) and the C1 range U+0080 to U+009F in the shared
+  normalizer, and re-normalize accepted wording on accept. Variation selectors
+  are `Mn`, not `Cf`, and appear in ordinary emoji text; decide separately
+  whether to strip them.
 
 All schemas reject additional properties and are duplicated by runtime
 validation. Every tool sets `untrustedContentHint: true`; only the first two set
