@@ -67,6 +67,20 @@ Vercel alias and branded domain both resolve to the production deployment.
 - The public deployment and review process incurred no package installation,
   paid API, subscription, or incremental hosting charge.
 
+## Human-gate contract
+
+- Assistant sharing begins only after explicit resident consent and ends
+  immediately on revocation.
+- The resident supplies the case text and chooses the need and reviewed civic
+  path. Tools cannot select or change the recipient, source, town, or topic.
+- Assistant-generated wording and questions remain staged until explicit
+  resident acceptance.
+- Destination controls remain locked until the resident reviews both the exact
+  destination and wording. No tool performs an external action; only an explicit
+  resident control may copy text or leave the page.
+- Publication is build-time and human-reviewed. No model can publish or modify a
+  civic fact at request time.
+
 ## Open submission gates
 
 - Execute `get_handoff_state` once through Chrome's WebMCP DevTools pane or a

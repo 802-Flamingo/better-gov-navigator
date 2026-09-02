@@ -34,6 +34,21 @@ Assistant sharing is off by default. When enabled in a WebMCP-capable browser,
 the page exposes four narrow tools. No tool can browse, calculate tax, change a
 recipient, copy text, navigate, submit a form, open email, or send a message.
 
+## Human gates
+
+- The resident must enable assistant sharing before any site tool can read the
+  case. Revocation aborts all registrations and prevents future reads.
+- The resident chooses the need and source-backed path. An assistant cannot
+  choose or alter the official destination.
+- Assistant wording remains a labeled proposal until the resident accepts it.
+- A draft requires resident context and a selected fresh path. Copy, email,
+  phone, appointment, and records actions remain locked until the resident
+  reviews the exact destination and wording.
+- No assistant tool sends, submits, calls, copies, opens email, or navigates.
+  Only an explicit resident control may copy text or leave the page.
+- Civic facts are generated from the frozen, human-reviewed source pack; there
+  is no request-time model call or automatic AI publication pipeline.
+
 ## Durable civic record
 
 The same reviewed source pack also produces a public `CivicRecordV1` projection.
@@ -117,7 +132,8 @@ See [SOURCES.md](SOURCES.md), [SECURITY.md](SECURITY.md),
 [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full contracts. The
 [replication blueprint](docs/REPLICATION_BLUEPRINT.md) explains how the bounded
 method can expand to another municipality without claiming that coverage exists
-today.
+today. The current operator and Claude handoff is maintained in
+[docs/CLAUDE_HANDOFF.md](docs/CLAUDE_HANDOFF.md).
 
 ## License
 
