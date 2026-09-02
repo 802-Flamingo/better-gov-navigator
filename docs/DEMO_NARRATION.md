@@ -1,6 +1,8 @@
 # Demo Narration
 
-Target: under two minutes and forty-five seconds at a calm speaking pace.
+Target: under two minutes and fifty-five seconds at a calm speaking pace. Hard
+ceiling is three minutes. Paired beat-by-beat with `DEMO_SCRIPT.md`; the refusal
+paragraph is the one that must not be trimmed.
 
 When a Waterbury tax bill jumps, public rates show what changed town-wide, but
 not why one resident's bill changed. Go Vermont turns that uncertainty into a
@@ -39,9 +41,24 @@ The result remains "Your draft to review." Go Vermont has sent nothing. The
 destination and wording stay separate, and contact controls remain locked until
 I review both.
 
-Revision checks reject stale calls. Turning sharing off removes every tool.
-Only the resident can accept wording, copy the body, or leave the page, and the
-message never enters a URL.
+Now the part that matters. I am going to ask the assistant to do three things a
+civic agent must never be able to do.
+
+Change the destination. No tool on this page accepts a recipient, and the update
+schema forbids unknown fields, so the attempt comes back as invalid input. The
+schema refuses it, not the model's judgment.
+
+Act on a stale case. I edit my question, and the handoff the assistant already
+staged is rejected, because its revision no longer matches the case in front of
+me.
+
+Work without permission. I turn sharing off, the four tools disappear, and there
+is nothing left to call. Turning it back on restores my draft.
+
+None of that is a prompt asking a model to behave. It is schema, consent, and
+revision state. Only the resident can accept wording, copy the body, or leave the
+page, and the message never enters a URL.
 
 WebMCP makes the boundary useful: the assistant collaborates inside a
 source-backed contract while the resident keeps every consequential choice.
+Waterbury property tax is town one. The contract is the part that travels.
