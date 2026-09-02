@@ -10,13 +10,44 @@ Official facts in. Accountable next steps out. No guessing in between.
 
 ## Short description
 
-Go Vermont Civic Navigator turns a frustrating property-tax question into a
-bounded civic handoff. It shows a Waterbury resident what ten reviewed official
-sources establish, makes unsupported conclusions visibly unavailable, and maps
-four common needs to accountable starting points. The full workflow works
-manually. With explicit consent, WebMCP lets an assistant clarify the resident's
-question and stage a deterministic handoff without choosing official facts,
-destinations, or external actions.
+Agents are about to start doing citizens' government errands, and the civic web
+is the worst possible surface for them to guess on: stale pages, ambiguous
+records, and destinations where a wrong guess reaches a real official about a
+real person's money. Go Vermont Civic Navigator is a working answer to what a
+government-facing page should hand an agent instead — a bounded civic contract.
+Waterbury, Vermont property tax is town one: ten reviewed official sources, four
+accountable paths, unsupported conclusions made structurally unavailable. The
+whole workflow works with no assistant at all. With explicit consent, four
+WebMCP tools let an assistant clarify the resident's question and stage a
+deterministic handoff while remaining unable to choose a fact, alter a
+destination, calculate a tax, or contact anyone.
+
+## The actual submission: a standard, demonstrated once
+
+The scarce thing here is not the town. It is the contract, and the contract is
+published, tested, and reusable:
+
+- **Facts are reviewed, not retrieved.** Every visible claim maps to a captured
+  official source with publisher, URL, retrieval date, locator, evidence excerpt,
+  and excerpt hash. There is no request-time model call anywhere in the product.
+- **Unknowns are first-class.** What the records cannot establish is rendered as
+  prominently as what they can. A missing answer is publishable. A guessed answer
+  is not.
+- **The destination is immutable.** An assistant reads the path the resident
+  chose. No tool schema accepts a recipient, and no tool can send, submit, call,
+  copy, open email, or navigate.
+- **Consent is the precondition for existence, not a banner.** Zero site tools
+  are registered before consent; revoking aborts registration mid-flight.
+- **Contacts expire.** Paths go stale after 30 days and then refuse to prepare a
+  handoff, because a civic destination that is merely *published* is not the same
+  as one that is *current*.
+
+[`docs/REPLICATION_BLUEPRINT.md`](REPLICATION_BLUEPRINT.md) states the seven-step
+gate a second municipality must pass, and says plainly that passing it is source
+work rather than a looser prompt. Waterbury is the proof that the gate is
+passable, not a claim that any other town has passed it. We would rather ship one
+town that is true than fifty that are plausible — and the whole point of writing
+the gate down is that the next town is somebody else's to add.
 
 ## Why WebMCP fits
 
@@ -27,6 +58,26 @@ the reviewed source pack and the path already chosen by the resident. The tools
 do not browse, alter an official destination, calculate tax, or contact anyone.
 An assistant may have unrelated capabilities from its host, but none are granted
 by this application.
+
+## What the tools refuse
+
+The refusals are the product, and each one is enforced in code and covered by a
+test rather than described in a prompt:
+
+- With sharing off, `document.modelContext` holds **zero** of this site's tools.
+  Consent is re-checked before *and* after every individual registration, so
+  revoking mid-registration aborts the whole set.
+- `propose_case_update` uses `additionalProperties: false`. An assistant that
+  tries to include a town, category, path, recipient, or civic fact is rejected
+  by schema, not by judgment.
+- Every mutating call carries a monotonic revision. A tool call staged against a
+  case the resident has since changed is refused as stale rather than silently
+  applied.
+- A path older than 30 days cannot prepare a handoff at all.
+- No tool in the manifest can copy, open email, dial, navigate, or submit. Those
+  four controls exist only as human buttons, and they stay disabled until the
+  resident checks a box confirming they read the exact destination *and* the
+  wording.
 
 ## Better human experience
 
