@@ -125,6 +125,12 @@ replay, cancellation, and partial WebMCP registration failure.
 - The email URL contains only an exact allowlisted recipient and generic subject.
 - The resident copies the body separately; Go Vermont never sends it.
 - Contact paths expire after 30 days. Expired paths cannot prepare a handoff.
+- All four Waterbury contact paths carry `staleAfter: 2026-09-30`, so this
+  deployment stops preparing handoffs on October 1, 2026 unless the contacts are
+  reverified and redeployed. Nothing warns beforehand, and that is the intended
+  behavior: silence is the correct output when freshness can no longer be
+  asserted. This is a shorter and stricter clock than the June 30, 2027 rate
+  label above; the earlier date governs.
 - 2026 rates automatically gain a historical label after June 30, 2027.
 
 See [SOURCES.md](SOURCES.md), [SECURITY.md](SECURITY.md),
