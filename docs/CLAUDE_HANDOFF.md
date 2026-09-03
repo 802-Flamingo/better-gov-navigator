@@ -2,9 +2,17 @@
 
 ## Read this first
 
-This is the authoritative handoff for Go Vermont Civic Navigator as of
-September 1, 2026. Verify every external state before acting; do not treat this
-document as proof that GitHub, Vercel, Chrome, or Devpost remained unchanged.
+This is the authoritative handoff for Go Vermont Civic Navigator, last revised
+September 3, 2026. Individual sections carry their own dates where a decision
+was made earlier; the September 1 decisions of record below are unchanged.
+Verify every external state before acting; do not treat this document as proof
+that GitHub, Vercel, Chrome, or Devpost remained unchanged.
+
+State on September 3, 2026: `main` is `ad71ccd`, the working tree is clean, and
+production returns 200 with the published record reporting three claims, four
+canonical unknowns, four civic paths, and ten sources. All engineering work is
+merged. Every remaining item is owner-owned — record the demo, publish it, add
+the URL, verify it logged out, submit, freeze.
 
 Repository scope is only `802-Flamingo/better-gov-navigator`. Do not modify the
 private GoVermont repository or any FedUp Citizen, Eat Vermont, Vermont Life, or

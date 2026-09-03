@@ -24,6 +24,15 @@ project did not automatically deploy the merged PR.
 The deployment-specific URL is retained for operator rollback. The stable
 Vercel alias and branded domain both resolve to the production deployment.
 
+`main` has moved past the deployed commit, and that gap is deliberate. Every
+commit after `89fcb28a85477ac65a8b01a6b7acf965adf7e672` — through `main` at
+`ad71ccd0b3a9a1e7a684e81538768151567fa04d` — changes documentation only. Verify
+before assuming: `git diff --stat 89fcb28 ad71ccd` touches no file under `src/`,
+`data/`, or `scripts/`, so a build at either commit produces the same 26 assets.
+The recorded commit is therefore the deployed artifact, not a stale pointer, and
+no redeploy is owed. A source or application change would require a new commit,
+deployment, and release record.
+
 ## Verified artifact
 
 - The production output contains exactly 26 allowlisted static assets and no
@@ -83,9 +92,16 @@ Vercel alias and branded domain both resolve to the production deployment.
 
 ## Open submission gates
 
-- Execute `get_handoff_state` once through Chrome's WebMCP DevTools pane or a
-  compatible Chrome agent. Registration and revocation are proven in real
-  Chrome; the remaining check is Chrome-side invocation through that testing UI.
+Every remaining gate is owner-owned. No engineering work is outstanding.
+
+- ~~Execute `get_handoff_state` once through Chrome's WebMCP DevTools pane or a
+  compatible Chrome agent.~~ **SUPERSEDED September 1, 2026.** Tool *execution*
+  against production is already proven by the ChatGPT in-app-browser canary
+  (discovery, call, stale state, revocation), and Chrome 152 separately proved
+  the registration lifecycle in both directions. This gate asked for a second
+  route to a property already demonstrated, not for missing coverage. Retained
+  struck through rather than deleted so the record shows why it closed; see
+  `RELEASE_CHECKLIST.md` for the full entry.
 - Publish the public under-three-minute YouTube demonstration.
 - Add the video URL to Devpost, verify it without authentication, and submit by
   September 3 at 10:00 a.m. Pacific.
